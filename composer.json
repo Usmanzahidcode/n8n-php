@@ -1,0 +1,20 @@
+{
+  "name": "usman/n8n-php",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Usman\\N8n\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Usman Zahid",
+      "email": "developerusman@yahoo.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "guzzlehttp/guzzle": "^7.9"
+  }
+}
