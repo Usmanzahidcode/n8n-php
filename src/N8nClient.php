@@ -1,5 +1,7 @@
 <?php
 
-class N8nClient {
+namespace Usman\N8n;
 
+class N8nClient {
+    
 }
