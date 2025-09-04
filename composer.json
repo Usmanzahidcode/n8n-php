@@ -26,5 +26,8 @@
       "email": "developerusman@yahoo.com"
     }
   ],
-  "minimum-stability": "stable"
+  "minimum-stability": "stable",
+  "require-dev": {
+    "phpunit/phpunit": "^12"
+  }
 }
