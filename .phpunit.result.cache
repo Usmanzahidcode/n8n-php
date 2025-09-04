@@ -1,1 +1,1 @@
-{"version":2,"defects":{"ClientTest::testClientWorks":8},"times":{"ClientTest::testClientIsCreated":0.126,"ClientTest::testClientWorks":0.039}}
+{"version":2,"defects":{"ClientTest::testClientWorks":5},"times":{"ClientTest::testClientIsCreated":0.114,"ClientTest::testClientWorks":0.268}}
