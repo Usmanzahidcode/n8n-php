@@ -1,6 +1,30 @@
 # n8n-php
 
-### Usage:
+This is a PHP SDK for [n8n](https://n8n.io), the open source automation tool.
+
+---
+
+## Why this exists
+
+I was integrating n8n end-to-end in my own projects and felt the need for a PHP SDK.  
+That is how **n8n-php** was born.
+
+It is still early, and it needs love from the PHP community to grow.
+
+---
+
+## Call for contributions
+
+We need contributors.  
+If you use PHP and you love automation, this package is for you.  
+Help make it better so the whole community can enjoy it.
+
+Fork it, open pull requests, share ideas. Every contribution matters.
+
+---
+
+## Usage:
+
 ```php
 
 N8nClient::connect(
