@@ -24,7 +24,6 @@ class WebhooksClient {
         }
 
         $this->http = new Client([
-            'base_uri' => $this->baseUrl,
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json'
@@ -32,7 +31,7 @@ class WebhooksClient {
         ]);
     }
 
-    public function request(string $path, array $data = []): ?array {
+    public function request(string $webhookId, array $data = []): ?array {
         try {
             $options = [];
 
@@ -50,7 +49,7 @@ class WebhooksClient {
                 }
             }
 
-            $response = $this->http->request($this->method->value, $path, $options);
+            $response = $this->http->request($this->method->value, "$this->baseUrl/$webhookId", $options);
             $body = (string) $response->getBody();
 
             return !empty($body) ? json_decode($body, true):null;
