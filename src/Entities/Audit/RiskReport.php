@@ -1,18 +1,18 @@
 <?php
 
-namespace Usman\N8n\Entities;
+namespace Usman\N8n\Entities\Audit;
 
-class RiskReport extends Entity
-{
+use Usman\N8n\Entities\Entity;
+
+class RiskReport extends Entity {
     public string $risk;
     /** @var Section[] */
     public array $sections = [];
 
-    protected function getFields(): array
-    {
+    protected function getFields(): array {
         return [
-            'risk' => 'string',
-            'sections' => ['class' => Section::class],
+            'risk' => ['key' => 'risk', 'type' => 'string'],
+            'sections' => ['key' => 'sections', 'type' => 'array', 'class' => Section::class],
         ];
     }
 }

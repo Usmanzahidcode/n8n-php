@@ -3,8 +3,6 @@
 namespace Usman\N8n\Entities\Workflow;
 
 use Usman\N8n\Entities\Entity;
-use Usman\N8n\Entities\ProjectEntity;
-use Usman\N8n\Entities\WorkflowSettings;
 
 class Workflow extends Entity {
     public string $id;
@@ -12,7 +10,7 @@ class Workflow extends Entity {
     public ?string $workflowId = null;
     public bool $active = false;
     public ?array $nodes = [];
-    public ?ProjectEntity $project = null;
+    public ?Project $project = null;
     public ?WorkflowSettings $settings = null;
     public ?array $tags = [];
     public ?array $shared = [];
@@ -20,16 +18,16 @@ class Workflow extends Entity {
 
     protected function getFields(): array {
         return [
-            'id' => 'string',
-            'name' => 'string',
-            'workflowId' => 'string',
-            'active' => 'bool',
-            'nodes' => ['class' => \stdClass::class],
-            'project' => \stdClass::class,
-            'settings' => \stdClass::class,
-            'tags' => ['class' => \stdClass::class],
-            'shared' => ['class' => \stdClass::class],
-            'credentials' => ['class' => \stdClass::class],
+            'id' => ['key' => 'id', 'type' => 'string'],
+            'name' => ['key' => 'name', 'type' => 'string'],
+            'workflowId' => ['key' => 'workflowId', 'type' => 'string'],
+            'active' => ['key' => 'active', 'type' => 'bool'],
+            'nodes' => ['key' => 'nodes', 'type' => 'array', 'class' => \stdClass::class],
+            'project' => ['key' => 'project', 'type' => 'object', 'class' => \stdClass::class],
+            'settings' => ['key' => 'settings', 'type' => 'object', 'class' => \stdClass::class],
+            'tags' => ['key' => 'tags', 'type' => 'array', 'class' => \stdClass::class],
+            'shared' => ['key' => 'shared', 'type' => 'array', 'class' => \stdClass::class],
+            'credentials' => ['key' => 'credentials', 'type' => 'array', 'class' => \stdClass::class],
         ];
     }
 }

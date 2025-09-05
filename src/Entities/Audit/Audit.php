@@ -1,23 +1,24 @@
 <?php
 
-namespace Usman\N8n\Entities;
+namespace Usman\N8n\Entities\Audit;
 
-class Audit extends Entity
-{
+use Usman\N8n\Entities\Entity;
+
+class Audit extends Entity {
     public ?RiskReport $credentialsRiskReport = null;
     public ?RiskReport $databaseRiskReport = null;
     public ?RiskReport $filesystemRiskReport = null;
     public ?RiskReport $instanceRiskReport = null;
     public ?RiskReport $nodesRiskReport = null;
 
-    protected function getFields(): array
-    {
+    protected function getFields(): array {
         return [
-            'credentialsRiskReport' => RiskReport::class,
-            'databaseRiskReport' => RiskReport::class,
-            'filesystemRiskReport' => RiskReport::class,
-            'instanceRiskReport' => RiskReport::class,
-            'nodesRiskReport' => RiskReport::class,
+            'credentialsRiskReport' => ['key' => 'Credentials Risk Report', 'type' => 'object', 'class' => RiskReport::class],
+            'databaseRiskReport' => ['key' => 'Database Risk Report', 'type' => 'object', 'class' => RiskReport::class],
+            'filesystemRiskReport' => ['key' => 'Filesystem Risk Report', 'type' => 'object', 'class' => RiskReport::class],
+            'instanceRiskReport' => ['key' => 'Instance Risk Report', 'type' => 'object', 'class' => RiskReport::class],
+            'nodesRiskReport' => ['key' => 'Nodes Risk Report', 'type' => 'object', 'class' => RiskReport::class],
         ];
     }
+
 }

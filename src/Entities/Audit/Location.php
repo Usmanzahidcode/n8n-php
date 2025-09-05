@@ -1,9 +1,10 @@
 <?php
 
-namespace Usman\N8n\Entities;
+namespace Usman\N8n\Entities\Audit;
 
-class Location extends Entity
-{
+use Usman\N8n\Entities\Entity;
+
+class Location extends Entity {
     public string $kind;
     public ?string $id = null;
     public ?string $name = null;
@@ -14,18 +15,17 @@ class Location extends Entity
     public ?string $nodeType = null;
     public ?string $packageUrl = null;
 
-    protected function getFields(): array
-    {
+    protected function getFields(): array {
         return [
-            'kind' => 'string',
-            'id' => 'string',
-            'name' => 'string',
-            'workflowId' => 'string',
-            'workflowName' => 'string',
-            'nodeId' => 'string',
-            'nodeName' => 'string',
-            'nodeType' => 'string',
-            'packageUrl' => 'string',
+            'kind' => ['key' => 'kind', 'type' => 'string'],
+            'id' => ['key' => 'id', 'type' => 'string'],
+            'name' => ['key' => 'name', 'type' => 'string'],
+            'workflowId' => ['key' => 'workflowId', 'type' => 'string'],
+            'workflowName' => ['key' => 'workflowName', 'type' => 'string'],
+            'nodeId' => ['key' => 'nodeId', 'type' => 'string'],
+            'nodeName' => ['key' => 'nodeName', 'type' => 'string'],
+            'nodeType' => ['key' => 'nodeType', 'type' => 'string'],
+            'packageUrl' => ['key' => 'packageUrl', 'type' => 'string'],
         ];
     }
 }

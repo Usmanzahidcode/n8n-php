@@ -4,17 +4,43 @@ namespace Usman\N8n\Entities;
 
 abstract class Entity {
     public function __construct(array $data = []) {
-        foreach ($this->getFields() as $field => $type) {
-            $value = $data[$field] ?? null;
+        foreach ($this->getFields() as $property => $definition) {
+            $key = $definition['key'] ?? $property;
+            $type = $definition['type'] ?? 'string';
+            $class = $definition['class'] ?? null;
 
-            // handle nested single entity
-            if (is_string($type) && class_exists($type) && is_array($value)) {
-                $this->$field = new $type($value);
-            } // handle array of entities
-            elseif (is_array($type) && isset($type['class']) && $value!==null) {
-                $this->$field = array_map(fn($item) => new $type['class']($item), $value);
-            } else {
-                $this->$field = $value;
+            $value = $data[$key] ?? null;
+
+            if ($value === null) {
+                $this->$property = null;
+                continue;
+            }
+
+            switch ($type) {
+                case 'string':
+                case 'int':
+                case 'float':
+                case 'bool':
+                    settype($value, $type);
+                    $this->$property = $value;
+                    break;
+
+                case 'object':
+                    $this->$property = new $class($value);
+                    break;
+
+                case 'array':
+                    if ($class) {
+                        // array of objects
+                        $this->$property = array_map(fn($item) => new $class($item), $value);
+                    } else {
+                        // primitive array
+                        $this->$property = $value;
+                    }
+                    break;
+
+                default:
+                    $this->$property = $value;
             }
         }
     }

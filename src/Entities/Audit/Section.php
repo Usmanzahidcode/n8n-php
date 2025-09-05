@@ -1,22 +1,22 @@
 <?php
 
-namespace Usman\N8n\Entities;
+namespace Usman\N8n\Entities\Audit;
 
-class Section extends Entity
-{
+use Usman\N8n\Entities\Entity;
+
+class Section extends Entity {
     public string $title;
     public string $description;
     public ?string $recommendation = null;
     /** @var Location[] */
-    public array $location = [];
+    public array $locations = [];
 
-    protected function getFields(): array
-    {
+    protected function getFields(): array {
         return [
-            'title' => 'string',
-            'description' => 'string',
-            'recommendation' => 'string',
-            'location' => ['class' => Location::class],
+            'title' => ['key' => 'title', 'type' => 'string'],
+            'description' => ['key' => 'description', 'type' => 'string'],
+            'recommendation' => ['key' => 'recommendation', 'type' => 'string'],
+            'locations' => ['key' => 'location', 'type' => 'array', 'class' => Location::class],
         ];
     }
 }
