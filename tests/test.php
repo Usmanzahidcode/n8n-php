@@ -15,5 +15,5 @@ N8nClient::connect(
     apiKey: $_ENV['N8N_API_KEY'],
 );
 
-$audit = N8nClient::workflows()->deactivateWorkflow('AEapFNBj5m4yvCrn');
+$audit = N8nClient::workflows()->deleteWorkflow("gAgNjbwRIRENqOwJ");
 var_dump($audit);
