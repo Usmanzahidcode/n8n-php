@@ -148,6 +148,7 @@ class WorkflowsClient extends BaseClient {
      * @return array Raw API response
      */
     public function updateTags(string $id, array $tagIds): array {
-        return $this->put("/workflows/{$id}/tags", $tagIds);
+        $payload = array_map(fn($tagId) => ['id' => $tagId], $tagIds);
+        return $this->put("/workflows/{$id}/tags", $payload);
     }
 }

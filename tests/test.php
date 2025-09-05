@@ -16,5 +16,5 @@ N8nClient::connect(
 );
 
 
-$audit = N8nClient::workflows()->transferWorkflow("wAh68hE9HsTy8p1O", '');
+$audit = N8nClient::workflows()->updateTags("Q0ewdfmT1M65pR3M", ['n2SNx8BMh3yRRUfk']);
 var_dump($audit);
