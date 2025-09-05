@@ -2,6 +2,8 @@
 
 namespace Usman\N8n\Entities;
 
+use Usman\N8n\Entities\Audit\Section;
+
 abstract class Entity {
     public function __construct(array $data = []) {
         foreach ($this->getFields() as $property => $definition) {
@@ -11,8 +13,12 @@ abstract class Entity {
 
             $value = $data[$key] ?? null;
 
-            if ($value === null) {
-                $this->$property = null;
+            if ($value===null) {
+                if ($type==='array') {
+                    $this->$property = [];
+                } else {
+                    $this->$property = null;
+                }
                 continue;
             }
 
