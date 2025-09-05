@@ -5,15 +5,24 @@ namespace Usman\N8n\Clients;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Usman\N8n\Enums\RequestMethod;
+use Usman\N8n\Enums\WebhookMode;
 
 class WebhooksClient {
     protected string $baseUrl;
     protected Client $http;
     protected RequestMethod $method;
+    protected WebhookMode $mode;
     private ?array $basicAuth = null;
 
-    public function __construct(string $baseUrl, RequestMethod $method = RequestMethod::Post, ?string $username = null, ?string $password = null) {
+    public function __construct(
+        string        $baseUrl,
+        WebhookMode   $mode = WebhookMode::Production,
+        RequestMethod $method = RequestMethod::Post,
+        ?string       $username = null,
+        ?string       $password = null
+    ) {
         $this->baseUrl = rtrim($baseUrl, '/');
+        $this->mode = $mode;
         $this->method = $method;
 
         if ($username && $password) {
@@ -49,7 +58,9 @@ class WebhooksClient {
                 }
             }
 
-            $response = $this->http->request($this->method->value, "$this->baseUrl/$webhookId", $options);
+            $url = $this->baseUrl . $this->mode->prefix() . "/$webhookId";
+
+            $response = $this->http->request($this->method->value, $url, $options);
             $body = (string) $response->getBody();
 
             return !empty($body) ? json_decode($body, true):null;

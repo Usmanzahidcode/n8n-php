@@ -12,7 +12,7 @@ $dotenv->safeLoad();
 // Write usage code here and test it by running  through the php command
 
 N8nClient::connect(
-    apiBaseUrl: $_ENV['N8N_API_BASE_URL'],
+    baseUrl: $_ENV['N8N_API_BASE_URL'],
     apiKey: $_ENV['N8N_API_KEY'],
     webhookBaseUrl: $_ENV['N8N_WEBHOOK_BASE_URL'],
     webhookUsername: $_ENV['N8N_WEBHOOK_USERNAME'],

@@ -9,6 +9,7 @@ use RuntimeException;
 
 class BaseClient {
     protected string $baseUrl;
+    protected string $apiPathPrefix = '/api/v1';
     protected string $apiKey;
     protected Client $http;
 
@@ -36,12 +37,8 @@ class BaseClient {
      * @throws GuzzleException
      */
     protected function request(string $method, string $endpoint, array $data = []): array {
-        if ($endpoint==='' || $endpoint[0]!=='/') {
-            throw new RuntimeException("Endpoint must start with '/' (got: {$endpoint})");
-        }
-
         $options = $this->buildOptions($method, $data);
-        $url = $this->baseUrl . $endpoint;
+        $url = $this->baseUrl . $this->apiPathPrefix . $endpoint;
 
         try {
             $response = $this->http->request($method, $url, $options);
