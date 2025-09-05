@@ -136,8 +136,7 @@ class WorkflowsClient extends BaseClient {
      * @return array List of tags
      */
     public function getTags(string $id): array {
-        $response = $this->get("/workflows/{$id}/tags");
-        return $response['data'] ?? [];
+        return $this->get("/workflows/{$id}/tags");
     }
 
     /**
