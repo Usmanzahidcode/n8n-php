@@ -3,8 +3,6 @@
 namespace Usman\N8n\Entities\Workflow;
 
 use Usman\N8n\Entities\Entity;
-use Usman\N8n\Entities\Node;
-use Usman\N8n\Entities\Tag;
 
 class Workflow extends Entity {
     public string $id;

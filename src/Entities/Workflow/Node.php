@@ -1,6 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities;
+namespace Usman\N8n\Entities\Workflow;
+
+use Usman\N8n\Entities\Entity;
 
 class Node extends Entity {
     public string $id;
