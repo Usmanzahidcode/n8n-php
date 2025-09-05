@@ -88,8 +88,9 @@ class WorkflowsClient extends BaseClient {
      * @param string $id Workflow ID
      * @return array Raw API response
      */
-    public function deleteWorkflow(string $id): array {
-        return $this->delete("/workflows/{$id}");
+    public function deleteWorkflow(string $id): Workflow {
+        $response = $this->delete("/workflows/{$id}");
+        return new Workflow($response);
     }
 
     /**

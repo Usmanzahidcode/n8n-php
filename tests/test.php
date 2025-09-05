@@ -15,5 +15,6 @@ N8nClient::connect(
     apiKey: $_ENV['N8N_API_KEY'],
 );
 
-$audit = N8nClient::workflows()->deleteWorkflow("gAgNjbwRIRENqOwJ");
+$audit = N8nClient::workflows()->deleteWorkflow("wAh68hE9HsTy8p1O");
+//$audit = N8nClient::workflows()->getTags("wAh68hE9HsTy8p1O");
 var_dump($audit);
