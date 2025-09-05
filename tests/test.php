@@ -15,5 +15,5 @@ N8nClient::connect(
     apiKey: $_ENV['N8N_API_KEY'],
 );
 
-$audit = N8nClient::audit()->generateAudit();
+$audit = N8nClient::workflows()->listWorkflows();
 var_dump($audit);
