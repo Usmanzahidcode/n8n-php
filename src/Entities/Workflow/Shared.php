@@ -3,7 +3,7 @@
 namespace Usman\N8n\Entities\Workflow;
 
 use Usman\N8n\Entities\Entity;
-use Usman\N8n\Entities\Project;
+use Usman\N8n\Entities\Project\Project;
 
 // Assuming Project entity exists
 

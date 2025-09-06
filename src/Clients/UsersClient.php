@@ -5,9 +5,9 @@ namespace Usman\N8n\Clients;
 use Usman\N8n\BaseClient;
 
 class UsersClient extends BaseClient {
-    public function listUsers(array $filters = []): array {
-        // filters: limit, cursor, includeRole, projectId
-        return $this->get('/users', $filters);
+    public function listUsers(array $filters = []): UserList {
+        $response = $this->get('/users', $filters);
+        return new UserList($response);
     }
 
     public function createUser(array $userPayloads): array {

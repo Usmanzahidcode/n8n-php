@@ -4,6 +4,7 @@ namespace Usman\N8n\Clients;
 
 use Usman\N8n\BaseClient;
 use Usman\N8n\Entities\Workflow\Workflow;
+use Usman\N8n\Entities\Workflow\WorkflowList;
 
 class WorkflowsClient extends BaseClient {
 
@@ -51,9 +52,9 @@ class WorkflowsClient extends BaseClient {
      * @param array $filters Optional filters for workflow listing
      * @return Workflow[] List of Workflow entities
      */
-    public function listWorkflows(array $filters = []): array {
+    public function listWorkflows(array $filters = []): WorkflowList {
         $response = $this->get('/workflows', $filters);
-        return array_map(fn($item) => new Workflow($item), $response['data'] ?? []);
+        return new WorkflowList($response);
     }
 
     /**

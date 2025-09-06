@@ -2,15 +2,13 @@
 
 namespace Usman\N8n\Entities\Workflow;
 
-use Usman\N8n\Entities\Entity;
+use Usman\N8n\Entities\ListingEntity;
 
-class WorkflowList extends Entity {
+class WorkflowList extends ListingEntity {
     /** @var Workflow[] */
-    public array $workflows = [];
+    public array $items = [];
 
-    protected function getFields(): array {
-        return [
-            'workflows' => ['key' => 'data', 'type' => 'array', 'class' => Workflow::class],
-        ];
+    protected function getItemClass(): string {
+        return Workflow::class;
     }
 }
