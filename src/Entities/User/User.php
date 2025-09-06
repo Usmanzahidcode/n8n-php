@@ -5,8 +5,8 @@ namespace Usman\N8n\Entities\User;
 use Usman\N8n\Entities\Entity;
 
 class User extends Entity {
-    public ?string $id = null;
-    public ?string $email = null;
+    public string $id;
+    public string $email;
     public ?string $firstName = null;
     public ?string $lastName = null;
     public ?bool $isPending = null;
