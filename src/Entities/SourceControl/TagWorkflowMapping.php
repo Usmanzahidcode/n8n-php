@@ -4,7 +4,7 @@ namespace Usman\N8n\Entities\SourceControl;
 
 use Usman\N8n\Entities\Entity;
 
-class TagMapping extends Entity {
+class TagWorkflowMapping extends Entity {
     public ?string $workflowId = null;
     public ?string $tagId = null;
 
