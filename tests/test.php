@@ -14,6 +14,23 @@ N8nClient::connect(
     apiKey: $_ENV['N8N_API_KEY']
 );
 
-$pull = N8nClient::sourceControl()->pull();
+$create = N8nClient::variables()->createVariable([
+    'key' => 'test_key',
+    'value' => 'test_value',
+]);
 
-var_dump($pull);
+$list = N8nClient::variables()->listVariables();
+
+$update = N8nClient::variables()->updateVariable($create->id, [
+    'key' => 'test_key_updated',
+    'value' => 'new_value',
+]);
+
+$delete = N8nClient::variables()->deleteVariable($create->id);
+
+var_dump(
+    $create,
+    $list,
+    $update,
+    $delete
+);
