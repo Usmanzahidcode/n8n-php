@@ -51,17 +51,7 @@ class WebhookClient {
      */
     public function send(string $webhookId, array $data = []): N8NResponse {
         $url = $this->baseUrl . $this->mode->prefix() . "/$webhookId";
-        $options = [];
-
-        if ($this->basicAuth) {
-            $options['auth'] = [$this->basicAuth['username'], $this->basicAuth['password']];
-        }
-
-        if (strtoupper($this->method->value)==='GET') {
-            if (!empty($data)) $options['query'] = RequestHelper::normalizeData($data);
-        } else {
-            if (!empty($data)) $options['json'] = $data;
-        }
+        $options = RequestHelper::buildOptions($this->method->value, $data, $this->basicAuth);
 
         try {
             $response = $this->http->request($this->method->value, $url, $options);

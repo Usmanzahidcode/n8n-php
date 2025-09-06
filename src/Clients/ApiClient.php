@@ -39,7 +39,7 @@ class ApiClient {
      * @return array Decoded JSON response or empty array on failure
      */
     protected function request(string $method, string $endpoint, array $data = []): array {
-        $options = $this->buildOptions($method, $data);
+        $options = RequestHelper::buildOptions($method, $data);
         $url = $this->baseUrl . $this->apiPathPrefix . $endpoint;
 
         try {
@@ -56,19 +56,6 @@ class ApiClient {
         } catch (GuzzleException $e) {
             return RequestHelper::handleException($e, true);
         }
-    }
-
-    /**
-     * Build Guzzle request options based on method and data.
-     */
-    private function buildOptions(string $method, array $data): array {
-        $options = [];
-        if (strtoupper($method)==='GET' && !empty($data)) {
-            $options['query'] = RequestHelper::normalizeData($data);
-        } elseif (!empty($data)) {
-            $options['json'] = $data;
-        }
-        return $options;
     }
 
     // Convenience wrappers for HTTP methods
