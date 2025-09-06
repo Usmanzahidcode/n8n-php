@@ -36,7 +36,7 @@ class UsersClient extends BaseClient {
      * ]
      *
      * @param array $userPayloads
-     * @return User[] Created users
+     * @return UserCreateResult[] Created users
      */
     public function createUser(array $userPayloads): array {
         $response = $this->post('/users', $userPayloads);
@@ -61,9 +61,9 @@ class UsersClient extends BaseClient {
      * @param string $idOrEmail
      * @return User Deleted user entity
      */
-    public function deleteUser(string $idOrEmail): User {
-        $response = $this->delete("/users/{$idOrEmail}");
-        return new User($response);
+    public function deleteUser(string $idOrEmail): bool {
+        $this->delete("/users/{$idOrEmail}");
+        return true;
     }
 
     /**
