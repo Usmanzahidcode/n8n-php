@@ -4,7 +4,7 @@ namespace Usman\N8n\Clients;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
+use Usman\N8n\Clients\Helpers\RequestHelper;
 use Usman\N8n\Response\N8nResponse;
 
 /**
@@ -54,29 +54,7 @@ class ApiClient {
                 'code' => $response->getStatusCode(),
             ];
         } catch (GuzzleException $e) {
-            $code = 500;
-            $message = $e->getMessage();
-            $data = null;
-
-            // If it’s a RequestException, we might have a response body
-            if ($e instanceof RequestException && $e->hasResponse()) {
-                $code = $e->getResponse()->getStatusCode();
-                $body = (string) $e->getResponse()->getBody();
-                $decoded = json_decode($body, true);
-                if (is_array($decoded)) {
-                    $message = $decoded['message'] ?? $message;
-                    $data = $decoded;
-                } else {
-                    $message = $body ?:$message;
-                }
-            }
-
-            return [
-                'success' => false,
-                'data' => $data,
-                'message' => $message,
-                'code' => $code,
-            ];
+            return RequestHelper::handleException($e, true);
         }
     }
 
@@ -86,27 +64,11 @@ class ApiClient {
     private function buildOptions(string $method, array $data): array {
         $options = [];
         if (strtoupper($method)==='GET' && !empty($data)) {
-            $options['query'] = $this->normalizeData($data);
+            $options['query'] = RequestHelper::normalizeData($data);
         } elseif (!empty($data)) {
             $options['json'] = $data;
         }
         return $options;
-    }
-
-    /**
-     * Normalize data for query parameters (remove nulls, convert bools to strings).
-     */
-    private function normalizeData(array $data): array {
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $data[$key] = $this->normalizeData($value);
-            } elseif ($value===null) {
-                unset($data[$key]);
-            } elseif (is_bool($value)) {
-                $data[$key] = $value ? 'true':'false';
-            }
-        }
-        return $data;
     }
 
     // Convenience wrappers for HTTP methods

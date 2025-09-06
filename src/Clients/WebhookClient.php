@@ -4,7 +4,7 @@ namespace Usman\N8n\Clients;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
+use Usman\N8n\Clients\Helpers\RequestHelper;
 use Usman\N8n\Enums\RequestMethod;
 use Usman\N8n\Enums\WebhookMode;
 use Usman\N8n\Response\N8NResponse;
@@ -58,7 +58,7 @@ class WebhookClient {
         }
 
         if (strtoupper($this->method->value)==='GET') {
-            if (!empty($data)) $options['query'] = $this->normalizeData($data);
+            if (!empty($data)) $options['query'] = RequestHelper::normalizeData($data);
         } else {
             if (!empty($data)) $options['json'] = $data;
         }
@@ -70,23 +70,7 @@ class WebhookClient {
 
             return new N8NResponse(true, $decoded, null, $response->getStatusCode());
         } catch (GuzzleException $e) {
-            $code = 500;
-            $message = $e->getMessage();
-            $data = null;
-
-            if ($e instanceof RequestException && $e->hasResponse()) {
-                $code = $e->getResponse()->getStatusCode();
-                $body = (string) $e->getResponse()->getBody();
-                $decoded = json_decode($body, true);
-                if (is_array($decoded)) {
-                    $message = $decoded['message'] ?? $message;
-                    $data = $decoded;
-                } else {
-                    $message = $body ?:$message;
-                }
-            }
-
-            return new N8NResponse(false, $data, $message, $code);
+            return RequestHelper::handleException($e);
         }
     }
 
@@ -110,24 +94,5 @@ class WebhookClient {
     public function withoutBasicAuth(): self {
         $this->basicAuth = null;
         return $this;
-    }
-
-    /**
-     * Normalize data for query parameters (remove nulls, convert bools to strings)
-     *
-     * @param array $data
-     * @return array
-     */
-    private function normalizeData(array $data): array {
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $data[$key] = $this->normalizeData($value);
-            } elseif ($value===null) {
-                unset($data[$key]);
-            } elseif (is_bool($value)) {
-                $data[$key] = $value ? 'true':'false';
-            }
-        }
-        return $data;
     }
 }
