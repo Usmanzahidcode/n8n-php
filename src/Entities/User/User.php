@@ -7,11 +7,11 @@ use Usman\N8n\Entities\Entity;
 class User extends Entity {
     public string $id;
     public string $email;
-    public string $firstName;
-    public string $lastName;
-    public bool $isPending;
-    public string $createdAt;
-    public string $updatedAt;
+    public ?string $firstName = null;
+    public ?string $lastName = null;
+    public ?bool $isPending = null;
+    public ?string $createdAt = null;
+    public ?string $updatedAt = null;
     public ?string $role = null;
 
     protected function getFields(): array {
