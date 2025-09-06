@@ -33,8 +33,8 @@ $users = N8nClient::users();
 //$single = $users->getUser('15f57b56-e334-45a8-a2e3-cdca43418df0', true);
 //var_dump($single);
 
-//$role = $users->changeUserRole('test.user@example.com', 'global:member');
-//var_dump($role);
+$role = $users->changeUserRole('test.user@example.com', 'global:admin');
+var_dump($role);
 //
 //$delete = $users->deleteUser('test.user@example.com');
 //var_dump($delete);
