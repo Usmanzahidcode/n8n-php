@@ -12,5 +12,5 @@ N8nClient::connect(
     apiKey: $_ENV['N8N_API_KEY']
 );
 
-$execution = N8nClient::executions()->deleteExecution("344");
+$execution = N8nClient::credentials()->getCredentialSchema('slackApi');
 var_dump($execution);
