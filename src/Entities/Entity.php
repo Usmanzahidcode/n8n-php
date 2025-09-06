@@ -11,14 +11,10 @@ abstract class Entity {
             $type = $definition['type'] ?? 'string';
             $class = $definition['class'] ?? null;
 
+            // If value not present skip...
+            // Will use the default value
             $value = $data[$key] ?? null;
-
             if ($value===null) {
-                if ($type==='array') {
-                    $this->$property = [];
-                } else {
-                    $this->$property = null;
-                }
                 continue;
             }
 

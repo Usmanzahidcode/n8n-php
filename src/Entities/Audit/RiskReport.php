@@ -5,7 +5,7 @@ namespace Usman\N8n\Entities\Audit;
 use Usman\N8n\Entities\Entity;
 
 class RiskReport extends Entity {
-    public string $risk;
+    public ?string $risk = null;
     /** @var Section[] */
     public array $sections = [];
 

@@ -5,8 +5,8 @@ namespace Usman\N8n\Entities\Project;
 use Usman\N8n\Entities\Entity;
 
 class Project extends Entity {
-    public string $id;
-    public string $name;
+    public ?string $id = null;
+    public ?string $name = null;
     public ?string $type = null;
 
     protected function getFields(): array {

@@ -5,7 +5,7 @@ namespace Usman\N8n\Entities\Audit;
 use Usman\N8n\Entities\Entity;
 
 class Location extends Entity {
-    public string $kind;
+    public ?string $kind = null;
     public ?string $id = null;
     public ?string $name = null;
     public ?string $workflowId = null;

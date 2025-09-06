@@ -8,9 +8,9 @@ use Usman\N8n\Entities\Project\Project;
 // Assuming Project entity exists
 
 class Shared extends Entity {
-    public string $role;
-    public string $workflowId;
-    public string $projectId;
+    public ?string $role = null;
+    public ?string $workflowId = null;
+    public ?string $projectId = null;
     public ?Project $project = null;
     public ?string $createdAt = null;
     public ?string $updatedAt = null;

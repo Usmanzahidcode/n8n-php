@@ -5,8 +5,8 @@ namespace Usman\N8n\Entities\Workflow;
 use Usman\N8n\Entities\Entity;
 
 class Workflow extends Entity {
-    public string $id;
-    public string $name;
+    public ?string $id = null;
+    public ?string $name = null;
     public bool $active = false;
     public bool $isArchived = false;
 

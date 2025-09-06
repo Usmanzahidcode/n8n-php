@@ -5,8 +5,8 @@ namespace Usman\N8n\Entities\Audit;
 use Usman\N8n\Entities\Entity;
 
 class Section extends Entity {
-    public string $title;
-    public string $description;
+    public ?string $title = null;
+    public ?string $description = null;
     public ?string $recommendation = null;
     /** @var Location[] */
     public array $locations = [];
