@@ -3,36 +3,67 @@
 namespace Usman\N8n\Clients;
 
 use Usman\N8n\BaseClient;
+use Usman\N8n\Entities\Tag\Tag;
+use Usman\N8n\Entities\Tag\TagList;
 
 class TagsClient extends BaseClient {
-    public function createTag(array $payload): array {
-        return $this->post('/tags', $payload);
+    /**
+     * Create a tag.
+     *
+     * @param array{name: string} $payload The payload containing the tag name
+     * @return Tag The created tag entity
+     */
+    public function createTag(array $payload): Tag {
+        $response = $this->post('/tags', $payload);
+        return new Tag($response);
     }
 
-    public function listTags(int $limit = 100, ?string $cursor = null): array {
-        return $this->get('/tags', array_filter([
+    /**
+     * Retrieve all tags.
+     *
+     * @param int $limit Maximum number of items to return (default 100)
+     * @param string|null $cursor Pagination cursor for next page
+     * @return TagList Paginated list of tags
+     */
+    public function listTags(int $limit = 100, ?string $cursor = null): TagList {
+        $response = $this->get('/tags', array_filter([
             'limit' => $limit,
             'cursor' => $cursor,
         ]));
+        return new TagList($response);
     }
 
-    public function getTag(string $id): array {
-        return $this->get("/tags/{$id}");
+    /**
+     * Retrieve a tag by ID.
+     *
+     * @param string $id The tag ID
+     * @return Tag The retrieved tag entity
+     */
+    public function getTag(string $id): Tag {
+        $response = $this->get("/tags/{$id}");
+        return new Tag($response);
     }
 
-    public function updateTag(string $id, array $payload): array {
-        return $this->put("/tags/{$id}", $payload);
+    /**
+     * Update a tag.
+     *
+     * @param string $id The tag ID
+     * @param array{name: string} $payload The updated payload (e.g. new name)
+     * @return Tag The updated tag entity
+     */
+    public function updateTag(string $id, array $payload): Tag {
+        $response = $this->put("/tags/{$id}", $payload);
+        return new Tag($response);
     }
 
-    public function deleteTag(string $id): array {
-        return $this->delete("/tags/{$id}");
-    }
-
-    public function getTagById(string $id): array {
-        return $this->get($id);
-    }
-
-    public function deleteTagById(string $id): array {
-        return $this->delete($id);
+    /**
+     * Delete a tag by ID.
+     *
+     * @param string $id The tag ID
+     * @return Tag The deleted tag entity
+     */
+    public function deleteTag(string $id): Tag {
+        $response = $this->delete("/tags/{$id}");
+        return new Tag($response);
     }
 }
