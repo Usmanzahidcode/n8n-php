@@ -49,7 +49,7 @@ class WebhookClient {
      * @param array $data Optional payload for the webhook
      * @return N8NResponse
      */
-    public function request(string $webhookId, array $data = []): N8NResponse {
+    public function send(string $webhookId, array $data = []): N8NResponse {
         $url = $this->baseUrl . $this->mode->prefix() . "/$webhookId";
         $options = [];
 

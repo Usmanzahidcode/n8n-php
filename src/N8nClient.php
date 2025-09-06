@@ -33,7 +33,7 @@ class N8nClient {
         self::$webhookPassword = $webhookPassword;
     }
 
-    public static function webhooks(
+    public static function webhook(
         WebhookMode   $mode = WebhookMode::Production,
         RequestMethod $method = RequestMethod::Post
     ): WebhookClient {
