@@ -14,16 +14,6 @@ N8nClient::connect(
     apiKey: $_ENV['N8N_API_KEY']
 );
 
-$tag = N8nClient::tags()->createTag(['name' => 'PragmaticTag1']);
-$tagList = N8nClient::tags()->listTags();
-$fetchedTag = N8nClient::tags()->getTag($tag->id);
-$updatedTag = N8nClient::tags()->updateTag($tag->id, ['name' => 'PragmaticTag2']);
-$deletedTag = N8nClient::tags()->deleteTag($tag->id);
+$pull = N8nClient::sourceControl()->pull();
 
-var_dump(
-    $tag,
-    $tagList,
-    $fetchedTag,
-    $updatedTag,
-    $deletedTag
-);
+var_dump($pull);
