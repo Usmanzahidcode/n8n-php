@@ -1,12 +1,13 @@
 <?php
 
-namespace Usman\N8n\Clients;
+namespace Usman\N8n\Clients\SubClients;
 
-use Usman\N8n\BaseClient;
+use Usman\N8n\Clients\ApiClient;
 use Usman\N8n\Entities\Credential\Credential;
 use Usman\N8n\Entities\Credential\CredentialSchema;
+use Usman\N8n\Response\N8NResponse;
 
-class CredentialsClient extends BaseClient {
+class CredentialsClient extends ApiClient {
     /**
      * Create a new credential.
      *
@@ -40,11 +41,11 @@ class CredentialsClient extends BaseClient {
      *     data:array<string,mixed>
      * } $payload
      *
-     * @return Credential Hydrated credential entity with id, name, type, createdAt, updatedAt
+     * @return N8NResponse Created credential
      */
-    public function createCredential(array $payload): Credential {
+    public function createCredential(array $payload): N8NResponse {
         $response = $this->post('/credentials', $payload);
-        return new Credential($response);
+        return $this->wrapEntity($response, Credential::class);
     }
 
     /**
@@ -53,13 +54,12 @@ class CredentialsClient extends BaseClient {
      * API: DELETE /credentials/{id}
      *
      * @param string $id The credential ID
-     * @return Credential Hydrated credential entity (id, name, type, createdAt, updatedAt)
+     * @return N8NResponse Deleted credential)
      */
-    public function deleteCredential(string $id): Credential {
+    public function deleteCredential(string $id): N8NResponse {
         $response = $this->delete("/credentials/{$id}");
-        return new Credential($response);
+        return $this->wrapEntity($response, Credential::class);
     }
-
 
     /**
      * Retrieve the schema for a credential type.
@@ -101,11 +101,10 @@ class CredentialsClient extends BaseClient {
      * Use this schema to construct the `data` payload when calling {@see self::createCredential()}.
      *
      * @param string $credentialTypeName The internal credential type name (e.g. "githubApi", "freshdeskApi")
-     * @return CredentialSchema Hydrated schema entity
+     * @return N8NResponse Schema details
      */
-    public function getCredentialSchema(string $credentialTypeName): CredentialSchema {
+    public function getCredentialSchema(string $credentialTypeName): N8NResponse {
         $response = $this->get("/credentials/schema/{$credentialTypeName}");
-        return new CredentialSchema($response);
+        return $this->wrapEntity($response, CredentialSchema::class);
     }
-
 }

@@ -1,13 +1,14 @@
 <?php
 
-namespace Usman\N8n\Clients;
+namespace Usman\N8n\Clients\SubClients;
 
-use Usman\N8n\BaseClient;
+use Usman\N8n\Clients\ApiClient;
 use Usman\N8n\Entities\User\User;
 use Usman\N8n\Entities\User\UserCreateResult;
 use Usman\N8n\Entities\User\UserList;
+use Usman\N8n\Response\N8NResponse;
 
-class UsersClient extends BaseClient {
+class UsersClient extends ApiClient {
     /**
      * List all users
      *
@@ -18,12 +19,12 @@ class UsersClient extends BaseClient {
      * - projectId (string)
      *
      * @param array $filters
-     * @return UserList
+     * @return N8NResponse List of Users
      */
-    public function listUsers(array $filters = []): UserList {
-        $filters['includeRole'] = true; // TODO: Properly manage default values, or the parameters should be arguments rather than array.
+    public function listUsers(array $filters = []): N8NResponse {
+        $filters['includeRole'] = true; // TODO:
         $response = $this->get('/users', $filters);
-        return new UserList($response);
+        return $this->wrapEntity($response, UserList::class);
     }
 
     /**
@@ -36,11 +37,11 @@ class UsersClient extends BaseClient {
      * ]
      *
      * @param array $userPayloads
-     * @return UserCreateResult[] Created users
+     * @return N8NResponse Created User
      */
-    public function createUser(array $userPayloads): array {
+    public function createUser(array $userPayloads): N8NResponse {
         $response = $this->post('/users', $userPayloads);
-        return array_map(fn($item) => new UserCreateResult($item), $response);
+        return $this->wrapEntity($response, UserCreateResult::class);
     }
 
     /**
@@ -48,22 +49,22 @@ class UsersClient extends BaseClient {
      *
      * @param string $idOrEmail
      * @param bool $includeRole
-     * @return User
+     * @return N8NResponse Retrieved User
      */
-    public function getUser(string $idOrEmail, bool $includeRole = false): User {
+    public function getUser(string $idOrEmail, bool $includeRole = false): N8NResponse {
         $response = $this->get("/users/{$idOrEmail}", ['includeRole' => $includeRole]);
-        return new User($response);
+        return $this->wrapEntity($response, User::class);
     }
 
     /**
      * Delete a user by ID or email
      *
      * @param string $idOrEmail
-     * @return User Deleted user entity
+     * @return N8NResponse Deleted User
      */
-    public function deleteUser(string $idOrEmail): bool {
-        $this->delete("/users/{$idOrEmail}");
-        return true;
+    public function deleteUser(string $idOrEmail): N8NResponse {
+        $response = $this->delete("/users/{$idOrEmail}");
+        return $this->wrapEntity($response, User::class);
     }
 
     /**
@@ -71,10 +72,10 @@ class UsersClient extends BaseClient {
      *
      * @param string $idOrEmail
      * @param string $newRoleName
-     * @return User Updated user entity
+     * @return N8NResponse Updated User
      */
-    public function changeUserRole(string $idOrEmail, string $newRoleName): User {
+    public function changeUserRole(string $idOrEmail, string $newRoleName): N8NResponse {
         $response = $this->patch("/users/{$idOrEmail}/role", ['newRoleName' => $newRoleName]);
-        return new User($response);
+        return $this->wrapEntity($response, User::class);
     }
 }

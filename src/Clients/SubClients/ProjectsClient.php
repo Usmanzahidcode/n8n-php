@@ -1,24 +1,25 @@
 <?php
 
-namespace Usman\N8n\Clients;
+namespace Usman\N8n\Clients\SubClients;
 
-use Usman\N8n\BaseClient;
+use Usman\N8n\Clients\ApiClient;
 use Usman\N8n\Entities\Project\Project;
 use Usman\N8n\Entities\Project\ProjectList;
 use Usman\N8n\Entities\Project\ProjectUserRelation;
+use Usman\N8n\Response\N8NResponse;
 
-class ProjectsClient extends BaseClient {
+class ProjectsClient extends ApiClient {
     /**
      * Create a new project.
      *
      * @param array{name: string} $payload Example: ['name' => 'My Project']
-     * @return Project The created project entity
+     * @return N8NResponse The created project entity
      *
      * API endpoint: POST /projects
      */
-    public function createProject(array $payload): Project {
+    public function createProject(array $payload): N8NResponse {
         $response = $this->post('/projects', $payload);
-        return new Project($response);
+        return $this->wrapEntity($response, Project::class);
     }
 
     /**
@@ -26,16 +27,16 @@ class ProjectsClient extends BaseClient {
      *
      * @param int $limit Maximum number of projects to return (default 100)
      * @param string|null $cursor Pagination cursor for next page
-     * @return ProjectList Paginated list of project entities
+     * @return N8NResponse Paginated list of project entities
      *
      * API endpoint: GET /projects
      */
-    public function listProjects(int $limit = 100, ?string $cursor = null): ProjectList {
+    public function listProjects(int $limit = 100, ?string $cursor = null): N8NResponse {
         $response = $this->get('/projects', array_filter([
             'limit' => $limit,
             'cursor' => $cursor,
         ]));
-        return new ProjectList($response);
+        return $this->wrapEntity($response, ProjectList::class);
     }
 
     /**
@@ -43,26 +44,26 @@ class ProjectsClient extends BaseClient {
      *
      * @param string $projectId The ID of the project
      * @param array{name: string} $payload Example: ['name' => 'Updated Project']
-     * @return Project The updated project entity
+     * @return N8NResponse The updated project entity
      *
      * API endpoint: PUT /projects/{projectId}
      */
-    public function updateProject(string $projectId, array $payload): Project {
+    public function updateProject(string $projectId, array $payload): N8NResponse {
         $response = $this->put("/projects/{$projectId}", $payload);
-        return new Project($response);
+        return $this->wrapEntity($response, Project::class);
     }
 
     /**
      * Delete a project.
      *
      * @param string $projectId The ID of the project
-     * @return Project The deleted project entity
+     * @return N8NResponse The deleted project entity
      *
      * API endpoint: DELETE /projects/{projectId}
      */
-    public function deleteProject(string $projectId): Project {
+    public function deleteProject(string $projectId): N8NResponse {
         $response = $this->delete("/projects/{$projectId}");
-        return new Project($response);
+        return $this->wrapEntity($response, Project::class);
     }
 
     /**
@@ -70,13 +71,13 @@ class ProjectsClient extends BaseClient {
      *
      * @param string $projectId The ID of the project
      * @param array<array{userId: string, role: string}> $relations Array of user relations
-     * @return ProjectUserRelation[] List of created user-project relations
+     * @return N8NResponse List of created user-project relations
      *
      * API endpoint: POST /projects/{projectId}/users
      */
-    public function addUsers(string $projectId, array $relations): array {
+    public function addUsers(string $projectId, array $relations): N8NResponse {
         $response = $this->post("/projects/{$projectId}/users", ['relations' => $relations]);
-        return array_map(fn($item) => new ProjectUserRelation($item), $response);
+        return $this->wrapEntity($response, ProjectUserRelation::class);
     }
 
     /**
@@ -84,13 +85,13 @@ class ProjectsClient extends BaseClient {
      *
      * @param string $projectId The ID of the project
      * @param string $userId The ID of the user to remove
-     * @return ProjectUserRelation The deleted relation entity
+     * @return N8NResponse The deleted relation entity
      *
      * API endpoint: DELETE /projects/{projectId}/users/{userId}
      */
-    public function deleteUser(string $projectId, string $userId): ProjectUserRelation {
+    public function deleteUser(string $projectId, string $userId): N8NResponse {
         $response = $this->delete("/projects/{$projectId}/users/{$userId}");
-        return new ProjectUserRelation($response);
+        return $this->wrapEntity($response, ProjectUserRelation::class);
     }
 
     /**
@@ -99,12 +100,12 @@ class ProjectsClient extends BaseClient {
      * @param string $projectId The ID of the project
      * @param string $userId The ID of the user
      * @param string $role The new role to assign
-     * @return ProjectUserRelation The updated relation entity
+     * @return N8NResponse The updated relation entity
      *
      * API endpoint: PATCH /projects/{projectId}/users/{userId}
      */
-    public function changeUserRole(string $projectId, string $userId, string $role): ProjectUserRelation {
+    public function changeUserRole(string $projectId, string $userId, string $role): N8NResponse {
         $response = $this->patch("/projects/{$projectId}/users/{$userId}", ['role' => $role]);
-        return new ProjectUserRelation($response);
+        return $this->wrapEntity($response, ProjectUserRelation::class);
     }
 }

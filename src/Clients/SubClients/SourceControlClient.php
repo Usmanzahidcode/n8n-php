@@ -1,11 +1,12 @@
 <?php
 
-namespace Usman\N8n\Clients;
+namespace Usman\N8n\Clients\SubClients;
 
-use Usman\N8n\BaseClient;
+use Usman\N8n\Clients\ApiClient;
 use Usman\N8n\Entities\SourceControl\PullResult;
+use Usman\N8n\Response\N8NResponse;
 
-class SourceControlClient extends BaseClient {
+class SourceControlClient extends ApiClient {
     /**
      * Pull changes from the connected remote repository.
      *
@@ -24,14 +25,10 @@ class SourceControlClient extends BaseClient {
      * - force (bool, optional): Whether to force pull even if there are conflicts.
      * - variables (array<string,string>, optional): Environment variables to use during pull.
      *
-     * @return PullResult Object containing details of the pulled items:
-     * - variables: List of added/changed variables.
-     * - credentials: Array of credentials with id, name, and type.
-     * - workflows: Array of workflows with id and name.
-     * - tags: Tag section with tags and workflow-tag mappings.
+     * @return N8NResponse Object containing details of the pulled items
      */
-    public function pull(array $options = []): PullResult {
+    public function pull(array $options = []): N8NResponse {
         $response = $this->post('/source-control/pull', $options);
-        return new PullResult($response);
+        return $this->wrapEntity($response, PullResult::class);
     }
 }

@@ -2,16 +2,16 @@
 
 namespace Usman\N8n;
 
-use Usman\N8n\Clients\AuditClient;
-use Usman\N8n\Clients\CredentialsClient;
-use Usman\N8n\Clients\ExecutionsClient;
-use Usman\N8n\Clients\ProjectsClient;
-use Usman\N8n\Clients\SourceControlClient;
-use Usman\N8n\Clients\TagsClient;
-use Usman\N8n\Clients\UsersClient;
-use Usman\N8n\Clients\VariablesClient;
-use Usman\N8n\Clients\WebhooksClient;
-use Usman\N8n\Clients\WorkflowsClient;
+use Usman\N8n\Clients\SubClients\AuditClient;
+use Usman\N8n\Clients\SubClients\CredentialsClient;
+use Usman\N8n\Clients\SubClients\ExecutionsClient;
+use Usman\N8n\Clients\SubClients\ProjectsClient;
+use Usman\N8n\Clients\SubClients\SourceControlClient;
+use Usman\N8n\Clients\SubClients\TagsClient;
+use Usman\N8n\Clients\SubClients\UsersClient;
+use Usman\N8n\Clients\SubClients\VariablesClient;
+use Usman\N8n\Clients\SubClients\WorkflowsClient;
+use Usman\N8n\Clients\WebhookClient;
 use Usman\N8n\Enums\RequestMethod;
 use Usman\N8n\Enums\WebhookMode;
 
@@ -36,9 +36,9 @@ class N8nClient {
     public static function webhooks(
         WebhookMode   $mode = WebhookMode::Production,
         RequestMethod $method = RequestMethod::Post
-    ): WebhooksClient {
+    ): WebhookClient {
         self::ensureWebhookConnected();
-        return new WebhooksClient(
+        return new WebhookClient(
             self::$baseUrl,
             $mode,
             $method,

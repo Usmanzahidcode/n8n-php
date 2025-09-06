@@ -1,12 +1,13 @@
 <?php
 
-namespace Usman\N8n\Clients;
+namespace Usman\N8n\Clients\SubClients;
 
-use Usman\N8n\BaseClient;
+use Usman\N8n\Clients\ApiClient;
 use Usman\N8n\Entities\Execution\Execution;
 use Usman\N8n\Entities\Execution\ExecutionList;
+use Usman\N8n\Response\N8NResponse;
 
-class ExecutionsClient extends BaseClient {
+class ExecutionsClient extends ApiClient {
 
     /**
      * List executions with optional filters
@@ -20,11 +21,11 @@ class ExecutionsClient extends BaseClient {
      * - cursor (string)
      *
      * @param array $filters
-     * @return ExecutionList
+     * @return N8NResponse Paginated list of execution entities
      */
-    public function listExecutions(array $filters = []): ExecutionList {
+    public function listExecutions(array $filters = []): N8NResponse {
         $response = $this->get('/executions', $filters);
-        return new ExecutionList($response);
+        return $this->wrapEntity($response, ExecutionList::class);
     }
 
     /**
@@ -32,33 +33,33 @@ class ExecutionsClient extends BaseClient {
      *
      * @param string $id Execution ID
      * @param bool $includeData Whether to include detailed execution data
-     * @return Execution
+     * @return N8NResponse The requested execution entity
      */
-    public function getExecution(string $id, bool $includeData = false): Execution {
+    public function getExecution(string $id, bool $includeData = false): N8NResponse {
         $response = $this->get("/executions/{$id}", ['includeData' => $includeData]);
-        return new Execution($response);
+        return $this->wrapEntity($response, Execution::class);
     }
 
     /**
      * Delete an execution by ID
      *
      * @param string $id Execution ID
-     * @return Execution The deleted Execution entity
+     * @return N8NResponse The deleted execution entity
      */
-    public function deleteExecution(string $id): Execution {
+    public function deleteExecution(string $id): N8NResponse {
         $response = $this->delete("/executions/{$id}");
-        return new Execution($response);
+        return $this->wrapEntity($response, Execution::class);
     }
 
     /**
      * Stop a running execution
      *
      * @param string $id Execution ID
-     * @return Execution The stopped Execution entity
+     * @return N8NResponse The stopped execution entity
      */
-    public function stopExecution(string $id): Execution {
+    public function stopExecution(string $id): N8NResponse {
         $response = $this->post("/executions/{$id}/stop");
-        return new Execution($response);
+        return $this->wrapEntity($response, Execution::class);
     }
 
     /**
@@ -66,10 +67,10 @@ class ExecutionsClient extends BaseClient {
      *
      * @param string $id Execution ID
      * @param array $loadData Optional data for retry (input overrides)
-     * @return Execution The retried Execution entity
+     * @return N8NResponse The retried execution entity
      */
-    public function retryExecution(string $id, array $loadData = []): Execution {
+    public function retryExecution(string $id, array $loadData = []): N8NResponse {
         $response = $this->post("/executions/{$id}/retry", $loadData);
-        return new Execution($response);
+        return $this->wrapEntity($response, Execution::class);
     }
 }

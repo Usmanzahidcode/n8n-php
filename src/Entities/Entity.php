@@ -2,8 +2,6 @@
 
 namespace Usman\N8n\Entities;
 
-use Usman\N8n\Entities\Audit\Section;
-
 abstract class Entity {
     public function __construct(array $data = []) {
         foreach ($this->getFields() as $property => $definition) {
