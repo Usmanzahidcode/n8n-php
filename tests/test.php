@@ -13,13 +13,9 @@ $dotenv->safeLoad();
 
 N8nClient::connect(
     baseUrl: $_ENV['N8N_BASE_URL'],
-    apiKey: $_ENV['N8N_API_KEY'],
-    webhookUsername: $_ENV['N8N_WEBHOOK_USERNAME'],
-    webhookPassword: $_ENV['N8N_WEBHOOK_PASSWORD']
+    apiKey: $_ENV['N8N_API_KEY']
 );
 
-$response = N8nClient::webhooks(WebhookMode::Test)
-    ->withoutBasicAuth()
-    ->request("b3b5b1f5-e48a-4d63-8935-f1103cd5f1c6");
+$response = N8nClient::webhooks(WebhookMode::Test)->request("b3b5b1f5-e48a-4d63-8935-f1103cd5f1c6");
 
 var_dump($response);
