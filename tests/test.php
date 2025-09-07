@@ -14,6 +14,11 @@ N8nClient::connect(
     apiKey: $_ENV['N8N_API_KEY']
 );
 
-$allTags = N8nClient::tags()->listTagsAll();
+$tagsClient = N8nClient::tags();
 
-var_dump($allTags);
+$tagListResponse = $tagsClient->listTags();
+$tagList = $tagListResponse->data;
+
+while ($tagsClient->hasMore($tagList)) {
+    $tagsClient->appendNextTagPage($tagList);
+}

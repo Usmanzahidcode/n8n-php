@@ -23,7 +23,7 @@ class TagsClient extends ApiClient {
     }
 
     /**
-     * Retrieve all tags.
+     * Retrieve paginated tags.
      *
      * @param int $limit Maximum number of items to return (default 100)
      * @param string|null $cursor Pagination cursor for next page
@@ -38,7 +38,7 @@ class TagsClient extends ApiClient {
     }
 
     /**
-     * Fetch all pages of tags and merge them into a single TagList.
+     * Fetch all pages of tags and a TagList.
      *
      * @param int $limit Number of items per page (default 100)
      * @return N8nResponse TagList containing all tags
@@ -51,13 +51,13 @@ class TagsClient extends ApiClient {
     }
 
     /**
-     * Fetch the next page of tags and append them to an existing TagList.
+     * Append the next page of tags to an existing TagList.
      *
      * @param TagList $list The existing TagList to append the next page to
      * @param int $limit Number of items per page (default 100)
      * @return N8nResponse Updated TagList with the next page of tags appended
      */
-    public function fetchNextTagPage(TagList $list, int $limit = 100): N8nResponse {
+    public function appendNextTagPage(TagList $list, int $limit = 100): N8nResponse {
         return $this->appendNextPage($list, fn($l, $c) => $this->listTags($l, $c), $limit);
     }
 
