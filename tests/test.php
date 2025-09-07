@@ -14,11 +14,6 @@ N8nClient::connect(
     apiKey: $_ENV['N8N_API_KEY']
 );
 
-$tags = N8nClient::tags()->listTags();
-$tagsPageTwo  = N8nClient::tags()->listTags($tags->data->nextCursor);
+$allTags = N8nClient::tags()->listTagsAll();
 
-var_dump(
-    $tags,
-    "++++++++++++++++++++++++++++++++++++++++++++",
-    $tagsPageTwo
-);
+var_dump($allTags);

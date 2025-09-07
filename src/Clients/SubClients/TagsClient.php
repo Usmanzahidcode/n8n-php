@@ -6,8 +6,11 @@ use Usman\N8n\Clients\ApiClient;
 use Usman\N8n\Entities\Tag\Tag;
 use Usman\N8n\Entities\Tag\TagList;
 use Usman\N8n\Response\N8nResponse;
+use Usman\N8n\Traits\PaginationTrait;
 
 class TagsClient extends ApiClient {
+    use PaginationTrait;
+
     /**
      * Create a tag.
      *
@@ -32,6 +35,30 @@ class TagsClient extends ApiClient {
             'cursor' => $cursor,
         ]));
         return $this->wrapEntity($response, TagList::class);
+    }
+
+    /**
+     * Fetch all pages of tags and merge them into a single TagList.
+     *
+     * @param int $limit Number of items per page (default 100)
+     * @return N8nResponse TagList containing all tags
+     */
+    public function listTagsAll(int $limit = 100): N8nResponse {
+        return $this->listAll(
+            fn($limit, $cursor) => $this->listTags($limit, $cursor),
+            $limit
+        );
+    }
+
+    /**
+     * Fetch the next page of tags and append them to an existing TagList.
+     *
+     * @param TagList $list The existing TagList to append the next page to
+     * @param int $limit Number of items per page (default 100)
+     * @return N8nResponse Updated TagList with the next page of tags appended
+     */
+    public function fetchNextTagPage(TagList $list, int $limit = 100): N8nResponse {
+        return $this->appendNextPage($list, fn($l, $c) => $this->listTags($l, $c), $limit);
     }
 
     /**
