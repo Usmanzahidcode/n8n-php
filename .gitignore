@@ -4,3 +4,6 @@
 .env
 .env.test
 
+# PHPUnit result cache
+.phpunit.result.cache
+
