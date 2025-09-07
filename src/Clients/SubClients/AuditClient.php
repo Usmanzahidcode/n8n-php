@@ -1,10 +1,10 @@
 <?php
 
-namespace Usman\N8n\Clients\SubClients;
+namespace UsmanZahid\N8n\Clients\SubClients;
 
-use Usman\N8n\Clients\ApiClient;
-use Usman\N8n\Entities\Audit\Audit;
-use Usman\N8n\Response\N8nResponse;
+use UsmanZahid\N8n\Clients\ApiClient;
+use UsmanZahid\N8n\Entities\Audit\Audit;
+use UsmanZahid\N8n\Response\N8nResponse;
 
 class AuditClient extends ApiClient {
     /**

@@ -1,10 +1,10 @@
 <?php
 
-namespace Usman\N8n\Helpers;
+namespace UsmanZahid\N8n\Helpers;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
-use Usman\N8n\Response\N8nResponse;
+use UsmanZahid\N8n\Response\N8nResponse;
 
 /**
  * Utility methods for preparing HTTP request options and handling responses.

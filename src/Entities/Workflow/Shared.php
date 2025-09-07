@@ -1,11 +1,9 @@
 <?php
 
-namespace Usman\N8n\Entities\Workflow;
+namespace UsmanZahid\N8n\Entities\Workflow;
 
-use Usman\N8n\Entities\Entity;
-use Usman\N8n\Entities\Project\Project;
-
-// Assuming Project entity exists
+use UsmanZahid\N8n\Entities\Entity;
+use UsmanZahid\N8n\Entities\Project\Project;
 
 class Shared extends Entity {
     public ?string $role = null;

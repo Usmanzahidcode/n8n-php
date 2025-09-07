@@ -1,6 +1,6 @@
 {
-  "name": "usman/n8n-php",
-  "description": "A lightweight DX focused PHP SDK for N8n REST API and Webhooks. Pragmatically interact with you N8n instances.",
+  "name": "usmanzahid/n8n-php",
+  "description": "A lightweight DX focused PHP SDK for N8n REST API and Webhooks. Pragmatically interact with your N8n instances.",
   "type": "library",
   "license": "MIT",
   "keywords": [
@@ -17,7 +17,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Usman\\N8n\\": "src/"
+      "UsmanZahid\\N8n\\": "src/"
     }
   },
   "authors": [

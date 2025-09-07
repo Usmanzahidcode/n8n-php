@@ -1,8 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\SourceControl;
+namespace UsmanZahid\N8n\Entities\SourceControl;
 
-use Usman\N8n\Entities\Entity;
+use UsmanZahid\N8n\Entities\Entity;
 
 class TagMappings extends Entity {
     /** @var TagItem[] */

@@ -1,8 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\Tag;
+namespace UsmanZahid\N8n\Entities\Tag;
 
-use Usman\N8n\Entities\ListingEntity;
+use UsmanZahid\N8n\Entities\ListingEntity;
 
 class TagList extends ListingEntity {
     /**

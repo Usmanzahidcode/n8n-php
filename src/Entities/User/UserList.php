@@ -1,8 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\User;
+namespace UsmanZahid\N8n\Entities\User;
 
-use Usman\N8n\Entities\ListingEntity;
+use UsmanZahid\N8n\Entities\ListingEntity;
 
 class UserList extends ListingEntity {
     /** @var User[] */

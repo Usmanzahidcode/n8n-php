@@ -1,11 +1,11 @@
 <?php
 
-namespace Usman\N8n\Clients\SubClients;
+namespace UsmanZahid\N8n\Clients\SubClients;
 
-use Usman\N8n\Clients\ApiClient;
-use Usman\N8n\Entities\Credential\Credential;
-use Usman\N8n\Entities\Credential\CredentialSchema;
-use Usman\N8n\Response\N8nResponse;
+use UsmanZahid\N8n\Clients\ApiClient;
+use UsmanZahid\N8n\Entities\Credential\Credential;
+use UsmanZahid\N8n\Entities\Credential\CredentialSchema;
+use UsmanZahid\N8n\Response\N8nResponse;
 
 class CredentialsClient extends ApiClient {
     /**

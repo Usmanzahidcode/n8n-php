@@ -1,13 +1,13 @@
 <?php
 
-namespace Usman\N8n\Clients;
+namespace UsmanZahid\N8n\Clients;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Usman\N8n\Enums\RequestMethod;
-use Usman\N8n\Enums\WebhookMode;
-use Usman\N8n\Helpers\RequestHelper;
-use Usman\N8n\Response\N8NResponse;
+use UsmanZahid\N8n\Enums\RequestMethod;
+use UsmanZahid\N8n\Enums\WebhookMode;
+use UsmanZahid\N8n\Helpers\RequestHelper;
+use UsmanZahid\N8n\Response\N8NResponse;
 
 class WebhookClient {
     protected string $baseUrl;

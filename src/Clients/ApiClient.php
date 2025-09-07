@@ -1,11 +1,11 @@
 <?php
 
-namespace Usman\N8n\Clients;
+namespace UsmanZahid\N8n\Clients;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Usman\N8n\Helpers\RequestHelper;
-use Usman\N8n\Response\N8nResponse;
+use UsmanZahid\N8n\Helpers\RequestHelper;
+use UsmanZahid\N8n\Response\N8nResponse;
 
 /**
  * Base client for interacting with the N8N API.

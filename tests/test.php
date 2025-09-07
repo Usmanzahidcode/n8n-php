@@ -1,6 +1,6 @@
 <?php
 
-use Usman\N8n\N8nClient;
+use UsmanZahid\N8n\N8nClient;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -23,6 +23,8 @@ $tagList = $page->data;
 while ($tagsClient->hasMore($tagList)) {
     $tagsClient->appendNextTagPage($tagList);
 }
+
+var_dump($tagList);
 
 foreach ($tagList->items as $tag) {
     echo $tag->name, PHP_EOL;

@@ -1,12 +1,12 @@
 <?php
 
-namespace Usman\N8n\Clients\SubClients;
+namespace UsmanZahid\N8n\Clients\SubClients;
 
-use Usman\N8n\Clients\ApiClient;
-use Usman\N8n\Entities\Variable\Variable;
-use Usman\N8n\Entities\Variable\VariableList;
-use Usman\N8n\Response\N8nResponse;
-use Usman\N8n\Traits\PaginationTrait;
+use UsmanZahid\N8n\Clients\ApiClient;
+use UsmanZahid\N8n\Entities\Variable\Variable;
+use UsmanZahid\N8n\Entities\Variable\VariableList;
+use UsmanZahid\N8n\Response\N8nResponse;
+use UsmanZahid\N8n\Traits\PaginationTrait;
 
 class VariablesClient extends ApiClient {
     use PaginationTrait;

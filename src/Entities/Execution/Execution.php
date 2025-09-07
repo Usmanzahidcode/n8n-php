@@ -1,8 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\Execution;
+namespace UsmanZahid\N8n\Entities\Execution;
 
-use Usman\N8n\Entities\Entity;
+use UsmanZahid\N8n\Entities\Entity;
 
 class Execution extends Entity {
     public ?int $id = null;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\Credential;
+namespace UsmanZahid\N8n\Entities\Credential;
 
-use Usman\N8n\Entities\Entity;
+use UsmanZahid\N8n\Entities\Entity;
 
 class Credential extends Entity {
     public ?string $id = null;

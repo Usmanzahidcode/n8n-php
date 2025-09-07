@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Usman\N8n\N8nClient;
+use UsmanZahid\N8n\N8nClient;
 
 class ClientTest extends TestCase {
     public function testClientWorks() {

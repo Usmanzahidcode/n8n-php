@@ -1,8 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\Execution;
+namespace UsmanZahid\N8n\Entities\Execution;
 
-use Usman\N8n\Entities\ListingEntity;
+use UsmanZahid\N8n\Entities\ListingEntity;
 
 class ExecutionList extends ListingEntity {
     /**

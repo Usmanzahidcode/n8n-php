@@ -1,8 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\User;
+namespace UsmanZahid\N8n\Entities\User;
 
-use Usman\N8n\Entities\Entity;
+use UsmanZahid\N8n\Entities\Entity;
 
 class UserCreateResult extends Entity {
     public ?User $user = null;

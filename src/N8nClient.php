@@ -1,19 +1,20 @@
 <?php
 
-namespace Usman\N8n;
+namespace UsmanZahid\N8n;
 
-use Usman\N8n\Clients\SubClients\AuditClient;
-use Usman\N8n\Clients\SubClients\CredentialsClient;
-use Usman\N8n\Clients\SubClients\ExecutionsClient;
-use Usman\N8n\Clients\SubClients\ProjectsClient;
-use Usman\N8n\Clients\SubClients\SourceControlClient;
-use Usman\N8n\Clients\SubClients\TagsClient;
-use Usman\N8n\Clients\SubClients\UsersClient;
-use Usman\N8n\Clients\SubClients\VariablesClient;
-use Usman\N8n\Clients\SubClients\WorkflowsClient;
-use Usman\N8n\Clients\WebhookClient;
-use Usman\N8n\Enums\RequestMethod;
-use Usman\N8n\Enums\WebhookMode;
+use RuntimeException;
+use UsmanZahid\N8n\Clients\SubClients\AuditClient;
+use UsmanZahid\N8n\Clients\SubClients\CredentialsClient;
+use UsmanZahid\N8n\Clients\SubClients\ExecutionsClient;
+use UsmanZahid\N8n\Clients\SubClients\ProjectsClient;
+use UsmanZahid\N8n\Clients\SubClients\SourceControlClient;
+use UsmanZahid\N8n\Clients\SubClients\TagsClient;
+use UsmanZahid\N8n\Clients\SubClients\UsersClient;
+use UsmanZahid\N8n\Clients\SubClients\VariablesClient;
+use UsmanZahid\N8n\Clients\SubClients\WorkflowsClient;
+use UsmanZahid\N8n\Clients\WebhookClient;
+use UsmanZahid\N8n\Enums\RequestMethod;
+use UsmanZahid\N8n\Enums\WebhookMode;
 
 class N8nClient {
     private static ?string $baseUrl = null;
@@ -94,13 +95,13 @@ class N8nClient {
 
     private static function ensureConnected(): void {
         if (!self::$baseUrl || !self::$apiKey) {
-            throw new \RuntimeException("N8nClient not connected. Call connect() first with API credentials.");
+            throw new RuntimeException("N8nClient not connected. Call connect() first with API credentials.");
         }
     }
 
     private static function ensureWebhookConnected(): void {
         if (!self::$baseUrl) {
-            throw new \RuntimeException("Webhook base URL not configured. Call connect() with webhook URL first.");
+            throw new RuntimeException("Webhook base URL not configured. Call connect() with webhook URL first.");
         }
     }
 }

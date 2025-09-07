@@ -1,11 +1,21 @@
 <?php
 
-namespace Usman\N8n\Traits;
+namespace UsmanZahid\N8n\Traits;
 
-use Usman\N8n\Entities\ListingEntity;
-use Usman\N8n\Response\N8nResponse;
+use UsmanZahid\N8n\Entities\ListingEntity;
+use UsmanZahid\N8n\Response\N8nResponse;
 
 trait PaginationTrait {
+
+    /**
+     * Determine whether a ListingEntity has more pages to fetch.
+     *
+     * @param ListingEntity $list The listing entity to check
+     * @return bool True if there are more pages, false otherwise
+     */
+    public function hasMore(ListingEntity $list): bool {
+        return (bool) $list->nextCursor;
+    }
 
     /**
      * Append the next page of items to a ListingEntity.
@@ -57,15 +67,5 @@ trait PaginationTrait {
         }
 
         return new N8nResponse(true, $list, 'All pages fetched', 200);
-    }
-
-    /**
-     * Determine whether a ListingEntity has more pages to fetch.
-     *
-     * @param ListingEntity $list The listing entity to check
-     * @return bool True if there are more pages, false otherwise
-     */
-    public function hasMore(ListingEntity $list): bool {
-        return (bool) $list->nextCursor;
     }
 }

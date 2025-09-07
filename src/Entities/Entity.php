@@ -1,6 +1,6 @@
 <?php
 
-namespace Usman\N8n\Entities;
+namespace UsmanZahid\N8n\Entities;
 
 abstract class Entity {
     public function __construct(array $data = []) {
@@ -9,49 +9,28 @@ abstract class Entity {
             $type = $definition['type'] ?? 'string';
             $class = $definition['class'] ?? null;
 
-            // If value not present skip...
-            // Will use the default value
-            $value = $data[$key] ?? null;
-            if ($value===null) {
-                continue;
+            if (!array_key_exists($key, $data)) {
+                continue; // keep default property value
             }
 
-            switch ($type) {
-                case 'string':
-                case 'int':
-                case 'float':
-                case 'bool':
-                    settype($value, $type);
-                    $this->$property = $value;
-                    break;
+            $value = $data[$key];
 
-                case 'object':
-                    $this->$property = new $class($value);
-                    break;
-
-                case 'array':
-                    if ($class) {
-                        // array of objects
-                        $this->$property = array_map(fn($item) => new $class($item), $value);
-                    } else {
-                        // primitive array
-                        $this->$property = $value;
-                    }
-                    break;
-
-                default:
-                    $this->$property = $value;
-            }
+            $this->$property = match ($type) {
+                'string', 'int', 'float', 'bool' => settype($value, $type) ? $value:null,
+                'object' => $class ? new $class($value):$value,
+                'array' => ($class && is_array($value)) ? array_map(fn($item) => new $class($item), $value):$value,
+                default => $value,
+            };
         }
     }
 
     /**
-     * Return an array mapping field names to their types or sub-entities
+     * Return an array mapping field names to their types or sub-entities.
      * Example:
      * return [
-     *   'id' => 'string',
-     *   'project' => ProjectEntity::class,
-     *   'nodes' => ['class' => NodeEntity::class],
+     *   'id' => ['key' => 'id', 'type' => 'string'],
+     *   'project' => ['key' => 'project', 'type' => 'object', 'class' => ProjectEntity::class],
+     *   'nodes' => ['key' => 'nodes', 'type' => 'array', 'class' => NodeEntity::class],
      * ];
      */
     abstract protected function getFields(): array;

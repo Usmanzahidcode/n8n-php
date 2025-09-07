@@ -1,8 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\Variable;
+namespace UsmanZahid\N8n\Entities\Variable;
 
-use Usman\N8n\Entities\Entity;
+use UsmanZahid\N8n\Entities\Entity;
 
 class Variable extends Entity {
     public ?string $id = null;

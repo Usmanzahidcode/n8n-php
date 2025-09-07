@@ -1,6 +1,6 @@
 <?php
 
-namespace Usman\N8n\Response;
+namespace UsmanZahid\N8n\Response;
 
 /**
  * @template T

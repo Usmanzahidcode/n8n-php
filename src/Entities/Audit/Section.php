@@ -1,8 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\Audit;
+namespace UsmanZahid\N8n\Entities\Audit;
 
-use Usman\N8n\Entities\Entity;
+use UsmanZahid\N8n\Entities\Entity;
 
 class Section extends Entity {
     public ?string $title = null;

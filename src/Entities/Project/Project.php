@@ -1,8 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\Project;
+namespace UsmanZahid\N8n\Entities\Project;
 
-use Usman\N8n\Entities\Entity;
+use UsmanZahid\N8n\Entities\Entity;
 
 class Project extends Entity {
     public ?string $id = null;

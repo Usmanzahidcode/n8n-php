@@ -1,6 +1,6 @@
 <?php
 
-namespace Usman\N8n\Entities;
+namespace UsmanZahid\N8n\Entities;
 
 abstract class ListingEntity {
     /** @var string|null */

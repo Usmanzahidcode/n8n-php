@@ -1,9 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\SourceControl;
+namespace UsmanZahid\N8n\Entities\SourceControl;
 
-use Usman\N8n\Entities\Entity;
-use Usman\N8n\Entities\Tag\Tag;
+use UsmanZahid\N8n\Entities\Entity;
 
 class PullResult extends Entity {
     /** @var VariableChanges|null */

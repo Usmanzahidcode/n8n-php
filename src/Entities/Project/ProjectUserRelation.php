@@ -1,8 +1,8 @@
 <?php
 
-namespace Usman\N8n\Entities\Project;
+namespace UsmanZahid\N8n\Entities\Project;
 
-use Usman\N8n\Entities\Entity;
+use UsmanZahid\N8n\Entities\Entity;
 
 class ProjectUserRelation extends Entity {
     public ?string $userId = null;
@@ -11,7 +11,7 @@ class ProjectUserRelation extends Entity {
     protected function getFields(): array {
         return [
             'userId' => ['key' => 'userId', 'type' => 'string'],
-            'role'   => ['key' => 'role', 'type' => 'string'],
+            'role' => ['key' => 'role', 'type' => 'string'],
         ];
     }
 }

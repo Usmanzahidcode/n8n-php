@@ -1,12 +1,12 @@
 <?php
 
-namespace Usman\N8n\Clients\SubClients;
+namespace UsmanZahid\N8n\Clients\SubClients;
 
-use Usman\N8n\Clients\ApiClient;
-use Usman\N8n\Entities\Workflow\Workflow;
-use Usman\N8n\Entities\Workflow\WorkflowList;
-use Usman\N8n\Response\N8nResponse;
-use Usman\N8n\Traits\PaginationTrait;
+use UsmanZahid\N8n\Clients\ApiClient;
+use UsmanZahid\N8n\Entities\Workflow\Workflow;
+use UsmanZahid\N8n\Entities\Workflow\WorkflowList;
+use UsmanZahid\N8n\Response\N8nResponse;
+use UsmanZahid\N8n\Traits\PaginationTrait;
 
 class WorkflowsClient extends ApiClient {
     use PaginationTrait;

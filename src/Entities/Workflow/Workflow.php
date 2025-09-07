@@ -1,9 +1,9 @@
 <?php
 
-namespace Usman\N8n\Entities\Workflow;
+namespace UsmanZahid\N8n\Entities\Workflow;
 
-use Usman\N8n\Entities\Entity;
-use Usman\N8n\Entities\Tag\Tag;
+use UsmanZahid\N8n\Entities\Entity;
+use UsmanZahid\N8n\Entities\Tag\Tag;
 
 class Workflow extends Entity {
     public ?string $id = null;
