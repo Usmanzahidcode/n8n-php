@@ -8,7 +8,6 @@ $dotenv = Dotenv\Dotenv::createMutable(__DIR__ . '/..', '.env.test');
 $dotenv->safeLoad();
 
 // Manual usage testing here :)
-// Test cases to be added :(
 
 N8nClient::connect(
     baseUrl: $_ENV['N8N_BASE_URL'],
