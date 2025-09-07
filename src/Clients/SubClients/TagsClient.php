@@ -27,7 +27,7 @@ class TagsClient extends ApiClient {
      *
      * @param int $limit Maximum number of items to return (default 100)
      * @param string|null $cursor Pagination cursor for next page
-     * @return N8nResponse Paginated list of tags
+     * @return N8nResponse<TagList> Paginated list of tags
      */
     public function listTags(int $limit = 100, ?string $cursor = null): N8NResponse {
         $response = $this->get('/tags', array_filter([

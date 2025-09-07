@@ -2,16 +2,32 @@
 
 namespace Usman\N8n\Response;
 
+/**
+ * @template T
+ */
 class N8nResponse {
-    public bool $success = true;
-    public ?string $message = null;
-    public mixed $data = null;
-    public int $code = 200;
+    /** @var bool */
+    public bool $success;
 
-    public function __construct(bool $success, $data = null, ?string $message = null, int $code = 200) {
+    /** @var T|null */
+    public mixed $data = null;
+
+    /** @var string */
+    public string $message;
+
+    /** @var int */
+    public int $statusCode;
+
+    /**
+     * @param bool $success
+     * @param T|null $data
+     * @param string $message
+     * @param int $statusCode
+     */
+    public function __construct(bool $success, mixed $data, string $message, int $statusCode) {
         $this->success = $success;
         $this->data = $data;
         $this->message = $message;
-        $this->code = $code;
+        $this->statusCode = $statusCode;
     }
 }
