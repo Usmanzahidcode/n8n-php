@@ -24,8 +24,6 @@ while ($tagsClient->hasMore($tagList)) {
     $tagsClient->appendNextTagPage($tagList);
 }
 
-var_dump($tagList);
-
 foreach ($tagList->items as $tag) {
     echo $tag->name, PHP_EOL;
 }
