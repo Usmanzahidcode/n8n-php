@@ -43,13 +43,15 @@ Use this code for instant testing and usage.
 
 ~~~
 use UsmanZahid\N8n\N8nClient;
+
 N8nClient::connect(
     'https://your-n8n-instance.com',
     'your-api-key'
 );
 
 $users = N8nClient::users()->listUsers();
-var_dump($users); output a list of users
+
+var_dump($users); // Output a list of users
 ~~~
 
 ### Actual usage example
@@ -88,6 +90,7 @@ $tagsListing = N8nClient::tags()->listTagsAll();
 
 ~~~
 use UsmanZahid\N8n\N8nClient;
+
 N8nClient::connect(
     'https://your-n8n-instance.com', // API base URL
     'your-api-key',                  // API key
