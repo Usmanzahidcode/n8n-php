@@ -2,6 +2,15 @@
   <img src="assets/media/n8n_logo.png" alt="n8n-php" width="300">
 </p>
 
+<div align="center">
+
+[![Latest Stable Version](https://img.shields.io/packagist/v/usmanzahid/n8n-php.svg)](https://packagist.org/packages/usmanzahid/n8n-php)
+[![Total Downloads](https://img.shields.io/packagist/dt/usmanzahid/n8n-php.svg)](https://packagist.org/packages/usmanzahid/n8n-php)
+[![PHP Version](https://img.shields.io/packagist/php-v/usmanzahid/n8n-php.svg)](https://www.php.net/)
+[![License](https://img.shields.io/packagist/l/usmanzahid/n8n-php.svg)](https://opensource.org/licenses/MIT)
+
+</div>
+
 # n8n-php
 
 A **lightweight PHP SDK** for [n8n](https://n8n.io), the open-source automation tool.  
