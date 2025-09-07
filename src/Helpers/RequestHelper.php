@@ -1,6 +1,6 @@
 <?php
 
-namespace Usman\N8n\Clients\Helpers;
+namespace Usman\N8n\Helpers;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;

@@ -1,6 +1,6 @@
 {
   "name": "usman/n8n-php",
-  "description": "A lightweight PHP SDK for N8n REST API and Webhooks",
+  "description": "A lightweight DX focused PHP SDK for N8n REST API and Webhooks. Pragmatically interact with you N8n instances.",
   "type": "library",
   "license": "MIT",
   "keywords": [
@@ -26,7 +26,7 @@
       "email": "developerusman@yahoo.com"
     }
   ],
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "require-dev": {
     "phpunit/phpunit": "^12",
     "vlucas/phpdotenv": "^5.6"

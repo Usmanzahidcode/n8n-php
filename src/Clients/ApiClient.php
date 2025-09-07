@@ -4,7 +4,7 @@ namespace Usman\N8n\Clients;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Usman\N8n\Clients\Helpers\RequestHelper;
+use Usman\N8n\Helpers\RequestHelper;
 use Usman\N8n\Response\N8nResponse;
 
 /**
