@@ -1,6 +1,6 @@
 {
   "name": "usmanzahid/n8n-php",
-  "description": "A lightweight DX focused PHP SDK for N8n REST API and Webhooks. Pragmatically interact with your N8n instances.",
+  "description": "n8n-php is a lightweight PHP SDK for the n8n automation platform. It provides a fast, reliable way to connect to your n8n instance and interact with its API, making automation in PHP straightforward and efficient.",
   "type": "library",
   "license": "MIT",
   "keywords": [
