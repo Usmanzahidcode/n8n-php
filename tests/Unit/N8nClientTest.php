@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit;
+namespace UsmanZahid\N8n\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -14,8 +14,6 @@ use UsmanZahid\N8n\Clients\SubClients\UsersClient;
 use UsmanZahid\N8n\Clients\SubClients\VariablesClient;
 use UsmanZahid\N8n\Clients\SubClients\WorkflowsClient;
 use UsmanZahid\N8n\Clients\WebhookClient;
-use UsmanZahid\N8n\Enums\RequestMethod;
-use UsmanZahid\N8n\Enums\WebhookMode;
 use UsmanZahid\N8n\N8nClient;
 
 class N8nClientTest extends TestCase {
@@ -24,7 +22,6 @@ class N8nClientTest extends TestCase {
         $refClass = new \ReflectionClass(N8nClient::class);
         foreach (['baseUrl', 'apiKey', 'webhookUsername', 'webhookPassword'] as $prop) {
             $property = $refClass->getProperty($prop);
-            $property->setAccessible(true);
             $property->setValue(null, null);
         }
     }
@@ -60,7 +57,7 @@ class N8nClientTest extends TestCase {
 
     public function testWebhookClientCreatedAfterConnect(): void {
         N8nClient::connect('http://localhost', 'test-key', 'user', 'pass');
-        $client = N8nClient::webhook(WebhookMode::Production, RequestMethod::Post);
+        $client = N8nClient::webhook();
         $this->assertInstanceOf(WebhookClient::class, $client);
     }
 }

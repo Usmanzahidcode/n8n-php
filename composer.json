@@ -20,6 +20,11 @@
       "UsmanZahid\\N8n\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "UsmanZahid\\N8n\\Tests\\": "tests/"
+    }
+  },
   "authors": [
     {
       "name": "Usman Zahid",
