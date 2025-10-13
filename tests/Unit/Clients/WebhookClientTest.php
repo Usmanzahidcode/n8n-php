@@ -9,7 +9,7 @@ use Psr\Http\Message\StreamInterface;
 use UsmanZahid\N8n\Clients\WebhookClient;
 use UsmanZahid\N8n\Enums\RequestMethod;
 use UsmanZahid\N8n\Enums\WebhookMode;
-use UsmanZahid\N8n\Response\N8NResponse;
+use UsmanZahid\N8n\Response\N8nResponse;
 
 class WebhookClientTest extends TestCase
 {
@@ -32,7 +32,7 @@ class WebhookClientTest extends TestCase
 
         $result = $client->send('test-webhook');
 
-        $this->assertInstanceOf(N8NResponse::class, $result);
+        $this->assertInstanceOf(N8nResponse::class, $result);
         $this->assertTrue($result->success);
         $this->assertEquals(['ok' => true], $result->data);
         $this->assertEquals(200, $result->code);

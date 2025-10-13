@@ -87,7 +87,7 @@ class ApiClient {
      * @param string|null $entityClass
      * @return N8nResponse
      */
-    protected function wrapEntity(array $raw, ?string $entityClass = null): N8NResponse {
+    protected function wrapEntity(array $raw, ?string $entityClass = null): N8nResponse {
         $success = $raw['success'] ?? false;
 
         $data = $success && $entityClass && isset($raw['data'])
@@ -98,7 +98,7 @@ class ApiClient {
 
         $code = $raw['code'] ?? ($success ? 200:500);
 
-        return new N8NResponse($success, $data, $message, $code);
+        return new N8nResponse($success, $data, $message, $code);
     }
 
 }
