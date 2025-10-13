@@ -58,7 +58,7 @@ class WebhookClient {
             $body = (string) $response->getBody();
             $decoded = $body==='' ? null:(json_decode($body, true) ?? $body);
 
-            return new N8nResponse(true, $decoded, null, $response->getStatusCode());
+            return new N8nResponse(true, $decoded, "Webhook triggered successfully", $response->getStatusCode());
         } catch (GuzzleException $e) {
             return RequestHelper::handleException($e);
         }
