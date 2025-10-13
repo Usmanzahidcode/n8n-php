@@ -4,6 +4,7 @@ namespace UsmanZahid\N8n\Clients;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Message\ResponseInterface;
 use UsmanZahid\N8n\Enums\RequestMethod;
 use UsmanZahid\N8n\Enums\WebhookMode;
 use UsmanZahid\N8n\Helpers\RequestHelper;
@@ -43,28 +44,6 @@ class WebhookClient {
     }
 
     /**
-     * Send a request to the webhook
-     *
-     * @param string $webhookId The webhook ID
-     * @param array $data Optional payload for the webhook
-     * @return N8nResponse
-     */
-    public function send(string $webhookId, array $data = []): N8nResponse {
-        $url = $this->baseUrl . $this->mode->prefix() . "/$webhookId";
-        $options = RequestHelper::buildOptions($this->method->value, $data, $this->basicAuth);
-
-        try {
-            $response = $this->http->request($this->method->value, $url, $options);
-            $body = (string) $response->getBody();
-            $decoded = $body==='' ? null:(json_decode($body, true) ?? $body);
-
-            return new N8nResponse(true, $decoded, "Webhook triggered successfully", $response->getStatusCode());
-        } catch (GuzzleException $e) {
-            return RequestHelper::handleException($e);
-        }
-    }
-
-    /**
      * Set basic auth credentials
      *
      * @param string $username
@@ -84,5 +63,43 @@ class WebhookClient {
     public function withoutBasicAuth(): self {
         $this->basicAuth = null;
         return $this;
+    }
+
+    /**
+     * Send a request to the webhook
+     *
+     * @param string $webhookId The webhook ID
+     * @param array $data Optional payload for the webhook
+     * @return N8nResponse<array>
+     */
+    public function send(string $webhookId, array $data = []): N8nResponse {
+        $url = $this->baseUrl . $this->mode->prefix() . "/$webhookId";
+        $options = RequestHelper::buildOptions($this->method->value, $data, $this->basicAuth);
+
+        try {
+            $response = $this->http->request($this->method->value, $url, $options);
+            return $this->buildResponse($response);
+        } catch (GuzzleException $e) {
+            return RequestHelper::handleException($e);
+        }
+
+    }
+
+    /**
+     * Handle response and build the N8nResponse
+     *
+     * @param ResponseInterface $response
+     * @return N8nResponse
+     */
+    protected function buildResponse(ResponseInterface $response): N8nResponse {
+        $body = (string) $response->getBody();
+        $decoded = $body === '' ? null : (json_decode($body, true) ?? $body);
+
+        $data = is_array($decoded) ? $decoded : $body;
+        $message = is_array($decoded) && isset($decoded['message'])
+            ? $decoded['message']
+            : 'Success';
+
+        return new N8nResponse(true, $data, $message, $response->getStatusCode());
     }
 }
