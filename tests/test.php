@@ -14,16 +14,20 @@ N8nClient::connect(
     apiKey: $_ENV['N8N_API_KEY']
 );
 
-$tagsClient = N8nClient::executions();
+$executionsClient = N8nClient::executions();
 
-$page = $tagsClient->listExecutions();
-$executionList = $page->data;
+$response = $executionsClient->listExecutions();
 
-// TODO: hasMore() method must handle if the listing is null.
-while ($tagsClient->hasMore($executionList)) {
-    $tagsClient->appendNextExecutionPage($executionList);
-}
+if ($response->success) {
+    $executionList = $response->data;
 
-foreach ($executionList->items as $execution) {
-    echo $execution->status, PHP_EOL;
+    while ($executionsClient->hasMore($executionList)) {
+        $executionsClient->appendNextExecutionPage($executionList);
+    }
+
+    echo count($executionList->items) . PHP_EOL;
+
+    foreach ($executionList->items as $execution) {
+//        echo $execution->status . PHP_EOL;
+    }
 }
