@@ -13,8 +13,8 @@ trait PaginationTrait {
      * @param ListingEntity $list The listing entity to check
      * @return bool True if there are more pages, false otherwise
      */
-    public function hasMore(ListingEntity $list): bool {
-        return (bool) $list->nextCursor;
+    public function hasMore(?ListingEntity $list): bool {
+        return (bool) $list?->nextCursor;
     }
 
     /**

@@ -19,7 +19,7 @@ N8nClient::connect(
 $webhooksClient = N8nClient::webhook();
 
 $response = $webhooksClient->send(
-    "b160748e-f4ec-4fe5-8833-3ef264a5f29a",
+    "295de809-8b93-45ec-ad83-7179f6693747",
 );
 
 dd($response);

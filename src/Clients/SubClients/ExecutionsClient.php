@@ -65,6 +65,7 @@ class ExecutionsClient extends ApiClient {
      * @return N8nResponse<ExecutionList> Updated ExecutionList with next page appended
      */
     public function appendNextExecutionPage(ExecutionList $list, array $filters = [], int $limit = 100): N8nResponse {
+        // TODO: No need to return as this already appends to the previous list.
         return $this->appendNextPage(
             $list,
             fn($l, $c) => $this->listExecutions(array_merge($filters, [
