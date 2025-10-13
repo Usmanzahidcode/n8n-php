@@ -17,6 +17,7 @@ class Execution extends Entity {
     public ?string $waitTill = null;
     public ?array $customData = null;
     public ?string $status = null;
+    public ?array $workflowData = null;
 
     protected function getFields(): array {
         return [
@@ -32,6 +33,7 @@ class Execution extends Entity {
             'waitTill' => ['key' => 'waitTill', 'type' => 'string'],
             'customData' => ['key' => 'customData', 'type' => 'array'],
             'status' => ['key' => 'status', 'type' => 'string'],
+            'workflowData' => ['key' => 'workflowData', 'type' => 'array'],
         ];
     }
 }

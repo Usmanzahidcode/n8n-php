@@ -16,6 +16,7 @@ N8nClient::connect(
 
 $executionsClient = N8nClient::executions();
 
+//$response = $executionsClient->getExecution(445);
 $response = $executionsClient->listExecutions();
 
 if ($response->success) {
