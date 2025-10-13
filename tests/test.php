@@ -25,5 +25,5 @@ while ($tagsClient->hasMore($executionList)) {
 }
 
 foreach ($executionList->items as $execution) {
-    echo $execution->mode, PHP_EOL;
+    echo $execution->status, PHP_EOL;
 }
