@@ -14,15 +14,21 @@ N8nClient::connect(
     apiKey: $_ENV['N8N_API_KEY']
 );
 
-$tagsClient = N8nClient::tags();
+$executionsClient = N8nClient::executions();
 
-$page = $tagsClient->listTags();
-$tagList = $page->data;
+//$response = $executionsClient->getExecution(550);
+$response = $executionsClient->listExecutions();
 
-while ($tagsClient->hasMore($tagList)) {
-    $tagsClient->appendNextTagPage($tagList);
-}
+if ($response->success) {
+    $executionList = $response->data;
 
-foreach ($tagList->items as $tag) {
-    echo $tag->name, PHP_EOL;
+    while ($executionsClient->hasMore($executionList)) {
+        $executionsClient->appendNextExecutionPage($executionList);
+    }
+
+    echo count($executionList->items) . PHP_EOL;
+
+    foreach ($executionList->items as $execution) {
+//        echo $execution->status . PHP_EOL;
+    }
 }
