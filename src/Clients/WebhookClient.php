@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use UsmanZahid\N8n\Enums\RequestMethod;
 use UsmanZahid\N8n\Enums\WebhookMode;
 use UsmanZahid\N8n\Helpers\RequestHelper;
-use UsmanZahid\N8n\Response\N8NResponse;
+use UsmanZahid\N8n\Response\N8nResponse;
 
 class WebhookClient {
     protected string $baseUrl;
@@ -47,9 +47,9 @@ class WebhookClient {
      *
      * @param string $webhookId The webhook ID
      * @param array $data Optional payload for the webhook
-     * @return N8NResponse
+     * @return N8nResponse
      */
-    public function send(string $webhookId, array $data = []): N8NResponse {
+    public function send(string $webhookId, array $data = []): N8nResponse {
         $url = $this->baseUrl . $this->mode->prefix() . "/$webhookId";
         $options = RequestHelper::buildOptions($this->method->value, $data, $this->basicAuth);
 
@@ -58,7 +58,7 @@ class WebhookClient {
             $body = (string) $response->getBody();
             $decoded = $body==='' ? null:(json_decode($body, true) ?? $body);
 
-            return new N8NResponse(true, $decoded, null, $response->getStatusCode());
+            return new N8nResponse(true, $decoded, null, $response->getStatusCode());
         } catch (GuzzleException $e) {
             return RequestHelper::handleException($e);
         }

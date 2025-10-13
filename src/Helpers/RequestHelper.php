@@ -88,7 +88,7 @@ class RequestHelper {
         }
 
         return !$returnArray
-            ? new N8NResponse(false, $data, $message, $code)
+            ? new N8nResponse(false, $data, $message, $code)
             :[
                 'code' => $code,
                 'message' => $message,
