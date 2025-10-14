@@ -13,35 +13,21 @@
 
 # n8n-php
 
-A **lightweight PHP SDK** for [n8n](https://n8n.io), the open-source automation tool.  
-Interact with your n8n instances programmatically, manage workflows, webhooks, and more.
+A lightweight PHP SDK for [n8n](https://n8n.io), the open-source workflow automation tool. Control your n8n instance directly from PHP: manage workflows, trigger webhooks, handle users, and more.
 
 ---
 
-## Why this exists
+## Quick Start
 
-I was integrating n8n end-to-end in my own projects and felt the need for a PHP SDK.  
-That’s how **n8n-php** was born.
+Install via Composer:
 
-It is still early, but this SDK is **feature-complete** for core use cases and ready for the PHP community to explore.
-
----
-
-## Getting started
-
-Get instantly started by installing and using the given code.
-
-### Installation
-
-~~~
+```bash
 composer require usmanzahid/n8n-php
-~~~
+```
 
-### Quickstart
+Connect and start using:
 
-Use this code for instant testing and usage.
-
-~~~
+```php
 use UsmanZahid\N8n\N8nClient;
 
 N8nClient::connect(
@@ -49,250 +35,563 @@ N8nClient::connect(
     'your-api-key'
 );
 
-$users = N8nClient::users()->listUsers();
+// Get all users
+$response = N8nClient::users()->listUsers();
 
-var_dump($users); // Output a list of users
-~~~
-
-### Actual usage example
-
-~~~
-$tagsClient = N8nClient::tags();
-
-$page = $tagsClient->listTags();
-
-if(!$page->success){
-    echo $page->message . PHP_EOL;
-    die();
+if ($response->success) {
+    foreach ($response->data->items as $user) {
+        echo $user->email . PHP_EOL;
+    }
 }
+```
 
-$tagList = $page->data;
-
-// Check if next pages exist and get append the next pages as needed 
-// This example keeps appends all pages
-while ($tagsClient->hasMore($tagList)) {
-    $tagsClient->appendNextTagPage($tagList);
-}
-
-foreach ($tagList->items as $tag) {
-    echo $tag->name, PHP_EOL;
-}
-
-// Or you can just fetch all, this could be resource expensive if there are too many objects
-$tagsListing = N8nClient::tags()->listTagsAll(); 
-~~~
+That's it. You're ready to go.
 
 ---
 
-## Usage
+## Table of Contents
 
-### Connecting to N8n
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Understanding Responses](#understanding-responses)
+- [Working with Workflows](#working-with-workflows)
+- [Working with Webhooks](#working-with-webhooks)
+- [Working with Users](#working-with-users)
+- [Working with Tags](#working-with-tags)
+- [Working with Variables](#working-with-variables)
+- [Working with Projects](#working-with-projects)
+- [Working with Executions](#working-with-executions)
+- [Working with Credentials](#working-with-credentials)
+- [Working with Audit](#working-with-audit)
+- [Pagination](#pagination)
+- [Contributing](#contributing)
+- [License](#license)
 
-~~~
+---
+
+## Installation
+
+```bash
+composer require usmanzahid/n8n-php
+```
+
+Requires PHP 7.4 or higher.
+
+---
+
+## Configuration
+
+Before making any requests, connect to your n8n instance:
+
+```php
 use UsmanZahid\N8n\N8nClient;
 
 N8nClient::connect(
-    'https://your-n8n-instance.com', // API base URL
-    'your-api-key',                  // API key
-    'webhook-username',              // optional webhook username
-    'webhook-password'               // optional webhook password
+    'https://your-n8n-instance.com',  // Your n8n instance URL
+    'your-api-key'                     // Your n8n API key
 );
-~~~
+```
 
-### Handling Responses and Errors
+**Optional webhook authentication:**
 
-All responses are returned as an `N8nResponse` object:
+```php
+N8nClient::connect(
+    'https://your-n8n-instance.com',
+    'your-api-key',
+    'webhook-username',  // Optional
+    'webhook-password'   // Optional
+);
+```
 
-~~~
-$response->success;    // If the operation was successful or not
-$response->data;       // Either a list object or an entity
-$response->message;    // A string message for error understanding
-$response->statusCode; // Status code of the response
-~~~
+---
 
-Check for success before using the data:
+## Understanding Responses
 
-~~~
+Every method returns an `N8nResponse` object with these properties:
+
+```php
+$response->success;    // bool: true if successful, false otherwise
+$response->data;       // object: The actual data returned (workflows, users, etc.)
+$response->message;    // string: Error message if something went wrong
+$response->statusCode; // int: HTTP status code
+```
+
+**Always check for success:**
+
+```php
+$response = N8nClient::workflows()->getWorkflow('workflow-id');
+
 if ($response->success) {
-    // Process data
-}
-~~~
-
-And this package handles issues gracefully and does not through any exceptions, the N8nResponse object does it all.
-
-### Working with Webhooks
-
-~~~
-$response = N8nClient::webhook(WebhookMode::Production, RequestMethod::Post)
-    ->send('your-webhook-id', ['data' => 'value']);
-
-if ($response->success) {
-    echo "Webhook sent successfully. Status code: " . $response->statusCode;
+    $workflow = $response->data;
+    // Use the workflow
 } else {
     echo "Error: " . $response->message;
 }
-~~~
+```
 
-### Working with Workflows
+No exceptions are thrown. Everything is handled through the response object.
 
-~~~
-// List workflows (paginated)
-$workflows = N8nClient::workflows()->listWorkflows(['limit' => 5]);
+---
 
-// List all workflows (auto-pagination)
-$allWorkflows = N8nClient::workflows()->listWorkflowsAll();
+## Working with Workflows
 
-// Append next page to an existing workflow list
-$nextPage = N8nClient::workflows()->appendNextWorkflowPage($workflows);
+### List workflows
 
-// Get a single workflow
-$workflow = N8nClient::workflows()->getWorkflow('workflow-id');
+```php
+// Get first page (default: 20 workflows)
+$response = N8nClient::workflows()->listWorkflows();
 
-// Create a new workflow
-$newWorkflow = N8nClient::workflows()->createWorkflow([
+// Get with custom limit
+$response = N8nClient::workflows()->listWorkflows(['limit' => 50]);
+```
+
+### Get all workflows (handles pagination automatically)
+
+```php
+$response = N8nClient::workflows()->listWorkflowsAll();
+
+if ($response->success) {
+    foreach ($response->data->items as $workflow) {
+        echo $workflow->name . PHP_EOL;
+    }
+}
+```
+
+### Get a single workflow
+
+```php
+$response = N8nClient::workflows()->getWorkflow('workflow-id');
+```
+
+### Create a workflow
+
+```php
+$response = N8nClient::workflows()->createWorkflow([
     'name' => 'My New Workflow',
     'nodes' => [],
+    'connections' => []
 ]);
+```
 
-// Update a workflow
-$updatedWorkflow = N8nClient::workflows()->updateWorkflow('workflow-id', [
-    'name' => 'Updated Name',
+### Update a workflow
+
+```php
+$response = N8nClient::workflows()->updateWorkflow('workflow-id', [
+    'name' => 'Updated Workflow Name'
 ]);
+```
 
-// Delete a workflow
-$deletedWorkflow = N8nClient::workflows()->deleteWorkflow('workflow-id');
+### Delete a workflow
 
-// Activate / Deactivate
+```php
+$response = N8nClient::workflows()->deleteWorkflow('workflow-id');
+```
+
+### Activate or deactivate
+
+```php
 N8nClient::workflows()->activateWorkflow('workflow-id');
 N8nClient::workflows()->deactivateWorkflow('workflow-id');
+```
 
-// Transfer to another project
-N8nClient::workflows()->transferWorkflow('workflow-id', 'project-id');
+### Transfer to another project
 
-// Get / Update tags
-$tags = N8nClient::workflows()->getTags('workflow-id');
-N8nClient::workflows()->updateTags('workflow-id', ['tag1-id', 'tag2-id']);
+```php
+N8nClient::workflows()->transferWorkflow('workflow-id', 'destination-project-id');
+```
 
-~~~
+### Manage workflow tags
 
-### Working with Variables
+```php
+// Get tags
+$response = N8nClient::workflows()->getTags('workflow-id');
 
-~~~
-// List variables
-$variables = N8nClient::variables()->listVariables();
+// Update tags (provide array of tag IDs)
+N8nClient::workflows()->updateTags('workflow-id', ['tag-id-1', 'tag-id-2']);
+```
 
-// List all variables
-$allVariables = N8nClient::variables()->listVariablesAll();
+---
 
-// Append next page
-$nextVariables = N8nClient::variables()->appendNextVariablePage($variables);
+## Working with Webhooks
 
-// Create, update, delete
-$newVar = N8nClient::variables()->createVariable(['key' => 'foo', 'value' => 'bar']);
-$updatedVar = N8nClient::variables()->updateVariable($newVar->data->id, ['value' => 'baz']);
-N8nClient::variables()->deleteVariable($newVar->data->id);
-~~~
+Trigger webhooks programmatically:
 
-### Working with Users
+```php
+use UsmanZahid\N8n\Enums\WebhookMode;
+use UsmanZahid\N8n\Enums\RequestMethod;
 
-~~~
-// List users
-$users = N8nClient::users()->listUsers();
-$allUsers = N8nClient::users()->listUsersAll();
-$nextUsers = N8nClient::users()->appendNextUserPage($users);
+$response = N8nClient::webhook(WebhookMode::Production, RequestMethod::Post)
+    ->send('your-webhook-id', [
+        'key' => 'value',
+        'data' => 'your data here'
+    ]);
 
-// Create user
-$newUser = N8nClient::users()->createUser([
-    ['email' => 'user@example.com', 'firstName' => 'John', 'lastName' => 'Doe']
+if ($response->success) {
+    echo "Webhook triggered successfully!";
+}
+```
+
+**Webhook modes:**
+- `WebhookMode::Production` - Live workflows
+- `WebhookMode::Test` - Test mode webhooks
+
+**Request methods:**
+- `RequestMethod::Get`
+- `RequestMethod::Post`
+- `RequestMethod::Put`
+- `RequestMethod::Patch`
+- `RequestMethod::Delete`
+
+---
+
+## Working with Users
+
+### List users
+
+```php
+$response = N8nClient::users()->listUsers();
+```
+
+### Get all users
+
+```php
+$response = N8nClient::users()->listUsersAll();
+```
+
+### Create a user
+
+```php
+$response = N8nClient::users()->createUser([
+    [
+        'email' => 'newuser@example.com',
+        'firstName' => 'John',
+        'lastName' => 'Doe',
+        'role' => 'member'
+    ]
 ]);
+```
 
-// Get / Delete user
-$user = N8nClient::users()->getUser('user@example.com');
-N8nClient::users()->deleteUser('user@example.com');
+### Get a user
 
-// Change role
-N8nClient::users()->changeUserRole('user@example.com', 'admin');
-~~~
+```php
+$response = N8nClient::users()->getUser('user@example.com');
+```
 
-### Working with Tags
+### Delete a user
 
-~~~
-$tags = N8nClient::tags()->listTags();
-$allTags = N8nClient::tags()->listTagsAll();
-$nextTags = N8nClient::tags()->appendNextTagPage($tags);
+```php
+$response = N8nClient::users()->deleteUser('user@example.com');
+```
 
-$newTag = N8nClient::tags()->createTag(['name' => 'Important']);
-$tag = N8nClient::tags()->getTag($newTag->data->id);
-$updatedTag = N8nClient::tags()->updateTag($newTag->data->id, ['name' => 'Updated Tag']);
-N8nClient::tags()->deleteTag($newTag->data->id);
-~~~
+### Change user role
 
-### Working with Projects
+```php
+$response = N8nClient::users()->changeUserRole('user@example.com', 'admin');
+```
 
-~~~
-$projects = N8nClient::projects()->listProjects();
-$allProjects = N8nClient::projects()->listProjectsAll();
-$nextProjects = N8nClient::projects()->appendNextProjectPage($projects);
+**Available roles:** `member`, `admin`, `owner`
 
-$newProject = N8nClient::projects()->createProject(['name' => 'My Project']);
-$updatedProject = N8nClient::projects()->updateProject($newProject->data->id, ['name' => 'Updated Project']);
-N8nClient::projects()->deleteProject($newProject->data->id);
+---
 
-// Manage project users
-N8nClient::projects()->addUsers($newProject->data->id, [['userId' => 'id', 'role' => 'member']]);
-N8nClient::projects()->changeUserRole($newProject->data->id, 'id', 'admin');
-N8nClient::projects()->deleteUser($newProject->data->id, 'id');
-~~~
+## Working with Tags
 
-### Working with Executions
+### List tags
 
-~~~
-$executions = N8nClient::executions()->listExecutions(5);
-$allExecutions = N8nClient::executions()->listExecutionsAll();
-$nextExecutions = N8nClient::executions()->appendNextExecutionPage($executions);
+```php
+$response = N8nClient::tags()->listTags();
+```
 
-$execution = N8nClient::executions()->getExecution('execution-id');
-N8nClient::executions()->deleteExecution('execution-id');
-N8nClient::executions()->stopExecution('execution-id');
-N8nClient::executions()->retryExecution('execution-id', ['inputData' => []]);
-~~~
+### Get all tags
 
-### Working with Credentials
+```php
+$response = N8nClient::tags()->listTagsAll();
+```
 
-~~~
-$schema = N8nClient::credentials()->getCredentialSchema('githubApi');
+### Create a tag
 
-$newCredential = N8nClient::credentials()->createCredential([
+```php
+$response = N8nClient::tags()->createTag([
+    'name' => 'Production'
+]);
+```
+
+### Get a tag
+
+```php
+$response = N8nClient::tags()->getTag('tag-id');
+```
+
+### Update a tag
+
+```php
+$response = N8nClient::tags()->updateTag('tag-id', [
+    'name' => 'Updated Tag Name'
+]);
+```
+
+### Delete a tag
+
+```php
+$response = N8nClient::tags()->deleteTag('tag-id');
+```
+
+---
+
+## Working with Variables
+
+### List variables
+
+```php
+$response = N8nClient::variables()->listVariables();
+```
+
+### Get all variables
+
+```php
+$response = N8nClient::variables()->listVariablesAll();
+```
+
+### Create a variable
+
+```php
+$response = N8nClient::variables()->createVariable([
+    'key' => 'API_KEY',
+    'value' => 'secret-value'
+]);
+```
+
+### Update a variable
+
+```php
+$response = N8nClient::variables()->updateVariable('variable-id', [
+    'value' => 'new-secret-value'
+]);
+```
+
+### Delete a variable
+
+```php
+$response = N8nClient::variables()->deleteVariable('variable-id');
+```
+
+---
+
+## Working with Projects
+
+### List projects
+
+```php
+$response = N8nClient::projects()->listProjects();
+```
+
+### Get all projects
+
+```php
+$response = N8nClient::projects()->listProjectsAll();
+```
+
+### Create a project
+
+```php
+$response = N8nClient::projects()->createProject([
+    'name' => 'My New Project'
+]);
+```
+
+### Update a project
+
+```php
+$response = N8nClient::projects()->updateProject('project-id', [
+    'name' => 'Updated Project Name'
+]);
+```
+
+### Delete a project
+
+```php
+$response = N8nClient::projects()->deleteProject('project-id');
+```
+
+### Add users to a project
+
+```php
+$response = N8nClient::projects()->addUsers('project-id', [
+    [
+        'userId' => 'user-id-1',
+        'role' => 'member'
+    ],
+    [
+        'userId' => 'user-id-2',
+        'role' => 'admin'
+    ]
+]);
+```
+
+### Change user role in a project
+
+```php
+$response = N8nClient::projects()->changeUserRole('project-id', 'user-id', 'admin');
+```
+
+### Remove user from a project
+
+```php
+$response = N8nClient::projects()->deleteUser('project-id', 'user-id');
+```
+
+---
+
+## Working with Executions
+
+### List executions
+
+```php
+// Get first 10 executions
+$response = N8nClient::executions()->listExecutions(10);
+```
+
+### Get all executions
+
+```php
+$response = N8nClient::executions()->listExecutionsAll();
+```
+
+### Get a single execution
+
+```php
+$response = N8nClient::executions()->getExecution('execution-id');
+```
+
+### Delete an execution
+
+```php
+$response = N8nClient::executions()->deleteExecution('execution-id');
+```
+
+### Stop a running execution
+
+```php
+$response = N8nClient::executions()->stopExecution('execution-id');
+```
+
+### Retry a failed execution
+
+```php
+$response = N8nClient::executions()->retryExecution('execution-id', [
+    'inputData' => []  // Optional custom input data
+]);
+```
+
+---
+
+## Working with Credentials
+
+### Get credential schema
+
+```php
+$response = N8nClient::credentials()->getCredentialSchema('githubApi');
+```
+
+### Create a credential
+
+```php
+$response = N8nClient::credentials()->createCredential([
     'name' => 'My GitHub Token',
     'type' => 'githubApi',
-    'data' => ['token' => 'your-token']
+    'data' => [
+        'token' => 'your-github-token'
+    ]
 ]);
+```
 
-N8nClient::credentials()->deleteCredential($newCredential->data->id);
-~~~
+### Delete a credential
 
-### Working with Audit
+```php
+$response = N8nClient::credentials()->deleteCredential('credential-id');
+```
 
-~~~
-$audit = N8nClient::audit()->generateAudit(['action' => 'workflow_created']);
-~~~
+---
+
+## Working with Audit
+
+Generate audit logs:
+
+```php
+$response = N8nClient::audit()->generateAudit([
+    'action' => 'workflow_created',
+    'additionalData' => []
+]);
+```
+
+---
+
+## Pagination
+
+Most list methods support pagination. There are three ways to handle it:
+
+### 1. Manual pagination with limits
+
+```php
+$response = N8nClient::workflows()->listWorkflows(['limit' => 10]);
+```
+
+### 2. Get all items automatically
+
+```php
+$response = N8nClient::workflows()->listWorkflowsAll();
+// Fetches all pages automatically
+```
+
+### 3. Manual page appending
+
+```php
+$response = N8nClient::tags()->listTags();
+
+$tagList = $response->data;
+$tagsClient = N8nClient::tags();
+
+// Check if more pages exist
+while ($tagsClient->hasMore($tagList)) {
+    // Append next page to existing list
+    $tagsClient->appendNextTagPage($tagList);
+}
+
+// Now $tagList contains all tags from all pages
+foreach ($tagList->items as $tag) {
+    echo $tag->name . PHP_EOL;
+}
+```
+
+**Available append methods:**
+- `appendNextWorkflowPage()`
+- `appendNextUserPage()`
+- `appendNextTagPage()`
+- `appendNextVariablePage()`
+- `appendNextProjectPage()`
+- `appendNextExecutionPage()`
 
 ---
 
 ## Contributing
 
-Your contributions are **greatly appreciated**!
+Contributions are welcome! If you have ideas, find bugs, or want to add features:
 
-If you use PHP and love automation, help make this SDK better for the community:
+1. Fork this repository
+2. Create your feature branch
+3. Submit a pull request
 
-- Fork the repository
-- Open pull requests
-- Share ideas or report issues
-
-Every contribution, big or small, makes a difference.
+Every contribution helps make this SDK better for the PHP community.
 
 ---
 
 ## License
 
 MIT © Usman Zahid
+
+---
+
+## Why This Exists
+
+I needed a clean way to integrate n8n into my PHP projects. Instead of writing the same API calls over and over, I built this SDK to make n8n integration simple and straightforward for PHP developers.
+
+It's feature-complete for core use cases and ready for production. If you find it useful, star the repo and share it with others!
