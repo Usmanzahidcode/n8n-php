@@ -16,8 +16,8 @@ N8nClient::connect(
 
 // Manual usage testing here :)
 
-$webhooksClient = N8nClient::executions();
+$webhooksClient = N8nClient::workflows();
 
-$response = $webhooksClient->listExecutions();
+$response = $webhooksClient->listWorkflowsAll();
 
 dd($response);
