@@ -13,7 +13,7 @@ class Execution extends Entity {
     public ?int $retrySuccessId = null;
     public ?string $startedAt = null;
     public ?string $stoppedAt = null;
-    public ?int $workflowId = null;
+    public ?string $workflowId = null;
     public ?string $waitTill = null;
     public ?array $customData = null;
     public ?string $status = null;
@@ -29,7 +29,7 @@ class Execution extends Entity {
             'retrySuccessId' => ['key' => 'retrySuccessId', 'type' => 'int'],
             'startedAt' => ['key' => 'startedAt', 'type' => 'string'],
             'stoppedAt' => ['key' => 'stoppedAt', 'type' => 'string'],
-            'workflowId' => ['key' => 'workflowId', 'type' => 'int'],
+            'workflowId' => ['key' => 'workflowId', 'type' => 'string'],
             'waitTill' => ['key' => 'waitTill', 'type' => 'string'],
             'customData' => ['key' => 'customData', 'type' => 'array'],
             'status' => ['key' => 'status', 'type' => 'string'],
