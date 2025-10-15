@@ -16,10 +16,8 @@ N8nClient::connect(
 
 // Manual usage testing here :)
 
-$webhooksClient = N8nClient::webhook();
+$webhooksClient = N8nClient::executions();
 
-$response = $webhooksClient->send(
-    "295de809-8b93-45ec-ad83-7179f6693747",
-);
+$response = $webhooksClient->listExecutions();
 
 dd($response);
