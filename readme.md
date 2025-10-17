@@ -459,7 +459,14 @@ $response = N8nClient::executions()->listExecutionsAll();
 ### Get a single execution
 
 ```php
+// Get execution details by ID (basic info only)
 $response = N8nClient::executions()->getExecution('execution-id');
+
+// Get execution with full workflow and input/output data
+// When $includeData = true, the SDK fetches all execution data from n8n,
+// including the workflow structure and the data present when the workflow started.
+$includeData = true;
+$response = N8nClient::executions()->getExecution('execution-id', $includeData);
 ```
 
 ### Delete an execution
