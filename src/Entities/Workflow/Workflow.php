@@ -24,25 +24,25 @@ class Workflow extends Entity {
     public ?WorkflowSettings $settings = null;
 
     /** @var array Static data for workflow */
-    public array $staticData = [];
+    public ?array $staticData = [];
 
     /** @var array Meta information */
-    public array $meta = [];
+    public ?array $meta = [];
 
     /** @var array Pin data */
-    public array $pinData = [];
+    public ?array $pinData = [];
 
     /** @var string|null Version ID */
     public ?string $versionId = null;
 
     /** @var int Trigger count */
-    public int $triggerCount = 0;
+    public ?int $triggerCount = 0;
 
     /** @var Shared[] */
-    public array $shared = [];
+    public ?array $shared = [];
 
     /** @var Tag[] */
-    public array $tags = [];
+    public ?array $tags = [];
 
     protected function getFields(): array {
         return [
